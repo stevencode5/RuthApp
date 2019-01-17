@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ruthapp/pages/mockups/statefull-page.dart';
+import 'package:ruthapp/pages/productos/consulta-productos.dart';
 
 class RuthApp extends StatefulWidget {
   @override
@@ -31,7 +31,7 @@ class _RuthAppState extends State<RuthApp> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => StfPage()),
+                  MaterialPageRoute(builder: (context) => ConsultaProductos()),
                 );
               },
               child: new Text("Go")),
