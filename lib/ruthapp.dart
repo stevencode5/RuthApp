@@ -34,7 +34,7 @@ class _RuthAppState extends State<RuthApp> {
                   MaterialPageRoute(builder: (context) => ConsultaProductos()),
                 );
               },
-              child: new Text("Go")),
+              child: new Text("Productos")),
         ],
       ))),
     );
