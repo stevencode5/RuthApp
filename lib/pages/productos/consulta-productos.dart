@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:ruthapp/pages/productos/crear-producto.dart';
-import 'package:ruthapp/pages/productos/producto-tile.dart';
 import 'package:ruthapp/pages/productos/producto.dart';
 import 'package:ruthapp/pages/productos/servicioProductos.dart';
 
@@ -47,11 +46,19 @@ class ConsultaProductos extends StatelessWidget {
     return lista;
   }
 
-  ProductoTile _crearListTile(Producto producto) {
-    return ProductoTile(producto);
+  ListTile _crearListTile(Producto producto){
+    return ListTile(
+      subtitle: Text("Cantidad: "+producto.cantidad.toString()),
+      trailing: Text(producto.precio.toString()),
+      leading: Image(
+        width: 70,
+        image: new AssetImage(producto.imagen)),
+      title: Text(producto.nombre),
+    );
   }
 
   ListView _buildListaProductos() {
     return ListView(children: _crearProductos());
   }
+
 }
