@@ -13,28 +13,32 @@ class _RuthAppState extends State<RuthApp> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("RuthApp !"),
+        centerTitle: true,
+        title: Text(
+          "RuthApp !",
+          style: TextStyle(
+            fontSize: 30
+          ),
+          ),
       ),
       body: Container(
           child: Center(
               child: Column(
         children: <Widget>[
-          Text("RuthApp !",
-              style: TextStyle(
-              fontSize: 30,
-              color: Colors.blueAccent,
-              fontWeight: FontWeight.bold)),
-          RaisedButton(
-              padding: const EdgeInsets.all(8.0),
-              textColor: Colors.white,
-              color: Colors.blue,
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ConsultaProductos()),
-                );
-              },
-              child: new Text("Productos")),
+          Container(
+            padding: EdgeInsets.all(20),
+            child: RaisedButton(
+                textColor: Colors.white,
+                color: Colors.blue,
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ConsultaProductos()),
+                  );
+                },
+                child: new Text("Productos")),
+          )
         ],
       ))),
     );
