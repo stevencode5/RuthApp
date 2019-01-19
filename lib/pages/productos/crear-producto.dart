@@ -10,7 +10,6 @@ class CrearProducto extends StatefulWidget {
 }
 
 class _CrearProductoState extends State<CrearProducto> {
-
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
 
   ServicioProducto servicioProducto;
@@ -34,7 +33,6 @@ class _CrearProductoState extends State<CrearProducto> {
   Form _crearFormulario(BuildContext context) {
     return Form(
       key: _formKey,
-      autovalidate: true,
       child: ListView(
         padding: EdgeInsets.symmetric(horizontal: 16.0),
         children: <Widget>[
@@ -50,7 +48,9 @@ class _CrearProductoState extends State<CrearProducto> {
 
   TextFormField _crearTextFieldNombre() {
     return TextFormField(
-      onSaved: (String nombre) { _nuevoProducto.nombre = nombre; },
+      onSaved: (String nombre) {
+        this._nuevoProducto.nombre = nombre;
+      },
       decoration: InputDecoration(
         icon: Icon(Icons.local_grocery_store),
         hintText: 'Ingrese el nombre del producto',
@@ -61,7 +61,9 @@ class _CrearProductoState extends State<CrearProducto> {
 
   TextFormField _crearTextFieldPrecio() {
     return TextFormField(
-      onSaved: (String precio) { _nuevoProducto.precio = int.parse(precio); },
+      onSaved: (String precio) {
+        this._nuevoProducto.precio = int.parse(precio);
+      },
       keyboardType: TextInputType.numberWithOptions(),
       decoration: InputDecoration(
         icon: Icon(Icons.attach_money),
@@ -73,7 +75,9 @@ class _CrearProductoState extends State<CrearProducto> {
 
   TextFormField _crearTextFieldCantidad() {
     return TextFormField(
-      onSaved: (String cantidad) { _nuevoProducto.cantidad = int.parse(cantidad); },
+      onSaved: (String cantidad) {
+        this._nuevoProducto.cantidad = int.parse(cantidad);
+      },
       keyboardType: TextInputType.numberWithOptions(),
       decoration: InputDecoration(
         icon: Icon(Icons.format_list_numbered),
@@ -85,7 +89,9 @@ class _CrearProductoState extends State<CrearProducto> {
 
   TextFormField _crearTextFieldImagen() {
     return TextFormField(
-            
+      onSaved: (String imagen) {
+        this._nuevoProducto.imagen = imagen;
+      },
       decoration: InputDecoration(
         icon: Icon(Icons.image),
         hintText: 'Ingrese una imagen del producto',
@@ -98,16 +104,18 @@ class _CrearProductoState extends State<CrearProducto> {
     return Container(
         padding: EdgeInsets.only(left: 40.0, top: 20.0),
         child: RaisedButton(
-          color: Colors.lightBlue,
+          color: Colors.blue,
           child: Text("Crear", style: TextStyle(color: Colors.white)),
-          //onPressed: _crearProducto(context),
+          onPressed: () => _crearProducto(context),
         ));
   }
 
   _crearProducto(BuildContext context) {
     print("Entro a crear Producto !");
+    print(_formKey.currentState);
+    _formKey.currentState.save();
     this.servicioProducto.crearProducto(this._nuevoProducto);
-    //Navigator.pop(context);
+    Navigator.pop(context);
   }
   
 }
