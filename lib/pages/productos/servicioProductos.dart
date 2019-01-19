@@ -1,4 +1,4 @@
-import 'package:ruthapp/pages/productos/producto.dart';
+import 'producto.dart';
 
 class ServicioProducto {
 
@@ -6,7 +6,7 @@ class ServicioProducto {
 
   ServicioProducto(){
     _productos = new List<Producto>();
-    // _crearProductosIniciales();
+    _crearProductosIniciales();
   }
 
   void _crearProductosIniciales() {
@@ -34,8 +34,14 @@ class ServicioProducto {
   }
 
   void crearProducto(Producto producto){
+    print("Producto !");
+    print("Nombre ${producto.nombre}");
+    print("Precio ${producto.precio}");
+    print("Cantidad ${producto.cantidad}");
+    print("Imagen ${producto.imagen}");
+
     this._productos.add(producto);
-    print("Cantidad de productos $this._productos.length");    
+    print("Cantidad de productos ${this._productos.length}");    
   }
 
 }
