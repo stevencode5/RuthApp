@@ -110,12 +110,11 @@ class _CrearProductoState extends State<CrearProducto> {
         ));
   }
 
-  _crearProducto(BuildContext context) {
+  void _crearProducto(BuildContext context) {
     print("Entro a crear Producto !");
-    print(_formKey.currentState);
     _formKey.currentState.save();
     this.servicioProducto.crearProducto(this._nuevoProducto);
-    Navigator.pop(context);
+    Navigator.pop(context, true); // TODO implementar cuando respuesta no sea exitosa
   }
-  
+
 }
