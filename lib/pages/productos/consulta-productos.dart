@@ -18,26 +18,30 @@ class ConsultaProductos extends StatelessWidget {
       appBar: AppBar(
         title: Text("Productos"),
       ),
-      body: Stack(
-        children: <Widget>[
-        _buildListaProductos(),
-        _buildBotonCrearProducto(context)
+      body: Stack(children: <Widget>[
+        _crearListaProductos(),
+        _crearBotonCrearProducto(context)
       ]),
     );
   }
 
-  Container _buildBotonCrearProducto(BuildContext context) {
+  ListView _crearListaProductos() {
+    return ListView(children: _crearProductos());
+  }
+
+  Container _crearBotonCrearProducto(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(20.0),
-      alignment: Alignment.bottomRight,
-      child: FloatingActionButton(
-      tooltip: "Nuevo Producto",
-      onPressed: () {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => CrearProducto()));
-      },
-      child: Icon(Icons.add),
-    ));
+        padding: EdgeInsets.all(20.0),
+        alignment: Alignment.bottomRight,
+        child: Builder(builder: (BuildContext context) {
+          return FloatingActionButton(
+            tooltip: "Nuevo Producto",
+            onPressed: () {
+              llamarAPantallaCrearProducto(context);
+            },
+            child: Icon(Icons.add),
+          );
+        }));
   }
 
   List<Widget> _crearProductos() {
@@ -46,19 +50,23 @@ class ConsultaProductos extends StatelessWidget {
     return lista;
   }
 
-  ListTile _crearListTile(Producto producto){
+  ListTile _crearListTile(Producto producto) {
     return ListTile(
-      subtitle: Text("Cantidad: "+producto.cantidad.toString()),
+      subtitle: Text("Cantidad: " + producto.cantidad.toString()),
       trailing: Text(producto.precio.toString()),
-      leading: Image(
-        width: 70,
-        image: new AssetImage(producto.imagen)),
+      leading: Image(width: 70, image: new AssetImage(producto.imagen)),
       title: Text(producto.nombre),
     );
   }
 
-  ListView _buildListaProductos() {
-    return ListView(children: _crearProductos());
+  void llamarAPantallaCrearProducto(BuildContext context) async {
+    final bool result = await Navigator.push(
+        context, MaterialPageRoute(builder: (context) => CrearProducto()));
+    if (result) {
+      Scaffold.of(context)
+        ..removeCurrentSnackBar()
+        ..showSnackBar(SnackBar(content: Text("Nuevo producto agregado")));
+    }
   }
 
 }

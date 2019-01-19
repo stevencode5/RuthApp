@@ -1,11 +1,18 @@
 class Producto {
-
   String id;
   String nombre;
   int cantidad;
   int precio;
   String imagen;
 
-  Producto(this.id, this.nombre, this.cantidad, this.precio, this.imagen);
-  
+  Producto();
+
+  Producto.fromDatos(String id, String nombre, int cantidad, int precio, String imagen){
+    this.id = id;
+    this.nombre = nombre;
+    this.cantidad = cantidad;
+    this.precio = precio;
+    this.imagen = imagen;
+  }
+
 }
