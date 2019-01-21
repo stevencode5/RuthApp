@@ -3,9 +3,8 @@ import 'package:ruthapp/pages/productos/producto.dart';
 import 'package:ruthapp/pages/productos/servicioProductos.dart';
 
 class ModificarProducto extends StatefulWidget {
-
   final Producto producto;
-  
+
   ModificarProducto(@required this.producto);
 
   @override
@@ -19,19 +18,19 @@ class _ModificarProductoState extends State<ModificarProducto> {
 
   ServicioProducto servicioProducto;
 
-  Producto _nuevoProducto;
+  Producto _productoModificar;
 
   _ModificarProductoState() {
     servicioProducto = new ServicioProducto();
-    _nuevoProducto = new Producto();
+    _productoModificar = new Producto();
   }
 
   @override
-  Widget build(BuildContext context) {  
-    this._nuevoProducto = widget.producto;  
+  Widget build(BuildContext context) {
+    this._productoModificar = widget.producto;
     return Scaffold(
         appBar: AppBar(
-          title: Text("Modificar - ${_nuevoProducto.nombre}"),
+          title: Text("Modificar - ${_productoModificar.nombre}"),
         ),
         body: _crearFormulario(context));
   }
@@ -54,9 +53,11 @@ class _ModificarProductoState extends State<ModificarProducto> {
 
   TextFormField _crearTextFieldNombre() {
     return TextFormField(
+      initialValue: this._productoModificar.nombre,
       onSaved: (String nombre) {
-        this._nuevoProducto.nombre = nombre;
+        this._productoModificar.nombre = nombre;
       },
+      enabled: false,
       decoration: InputDecoration(
         icon: Icon(Icons.local_grocery_store),
         hintText: 'Ingrese el nombre del producto',
@@ -67,8 +68,9 @@ class _ModificarProductoState extends State<ModificarProducto> {
 
   TextFormField _crearTextFieldPrecio() {
     return TextFormField(
+      initialValue: this._productoModificar.precio.toString(),
       onSaved: (String precio) {
-        this._nuevoProducto.precio = int.parse(precio);
+        this._productoModificar.precio = int.parse(precio);
       },
       keyboardType: TextInputType.numberWithOptions(),
       decoration: InputDecoration(
@@ -81,8 +83,9 @@ class _ModificarProductoState extends State<ModificarProducto> {
 
   TextFormField _crearTextFieldCantidad() {
     return TextFormField(
+      initialValue: this._productoModificar.cantidad.toString(),
       onSaved: (String cantidad) {
-        this._nuevoProducto.cantidad = int.parse(cantidad);
+        this._productoModificar.cantidad = int.parse(cantidad);
       },
       keyboardType: TextInputType.numberWithOptions(),
       decoration: InputDecoration(
@@ -95,8 +98,9 @@ class _ModificarProductoState extends State<ModificarProducto> {
 
   TextFormField _crearTextFieldImagen() {
     return TextFormField(
+      initialValue: this._productoModificar.imagen,
       onSaved: (String imagen) {
-        this._nuevoProducto.imagen = imagen;
+        this._productoModificar.imagen = imagen;
       },
       decoration: InputDecoration(
         icon: Icon(Icons.image),
@@ -112,15 +116,41 @@ class _ModificarProductoState extends State<ModificarProducto> {
         child: RaisedButton(
           color: Colors.blue,
           child: Text("Guardar", style: TextStyle(color: Colors.white)),
-          onPressed: () => _crearProducto(context),
+          onPressed: () => _mostrarConfirmacion(context)
         ));
   }
 
-  void _crearProducto(BuildContext context) {
-    print("Entro a crear Producto !");
+  void _modificarProducto(BuildContext context) {
+    print("Entro a modificar Producto !");
     _formKey.currentState.save();
-    this.servicioProducto.crearProducto(this._nuevoProducto);
+    this.servicioProducto.modificarProducto(this._productoModificar);
     Navigator.pop(context, true); // TODO implementar cuando respuesta no sea exitosa
   }
 
+  void _mostrarConfirmacion(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: new Text("Confirmacion"),
+          content: new Text("¿Esta seguro de modificar el producto?"),
+          actions: <Widget>[
+            new FlatButton(
+              child: new Text("Cerrar"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              }
+            ),
+            new FlatButton(
+              child: new Text("Aceptar"),
+              onPressed: () {
+                Navigator.of(context).pop();
+                _modificarProducto(context);
+              },
+            )            
+          ],
+        );
+      },
+    );
+  }
 }
