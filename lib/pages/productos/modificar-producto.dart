@@ -3,6 +3,11 @@ import 'package:ruthapp/pages/productos/producto.dart';
 import 'package:ruthapp/pages/productos/servicioProductos.dart';
 
 class ModificarProducto extends StatefulWidget {
+
+  final Producto producto;
+  
+  ModificarProducto(@required this.producto);
+
   @override
   State<StatefulWidget> createState() {
     return _ModificarProductoState();
@@ -22,10 +27,11 @@ class _ModificarProductoState extends State<ModificarProducto> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {  
+    this._nuevoProducto = widget.producto;  
     return Scaffold(
         appBar: AppBar(
-          title: Text("Modificar producto"),
+          title: Text("Modificar - ${_nuevoProducto.nombre}"),
         ),
         body: _crearFormulario(context));
   }
