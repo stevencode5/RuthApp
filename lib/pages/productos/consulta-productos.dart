@@ -1,17 +1,10 @@
-import 'package:flutter/material.dart';
-import 'package:ruthapp/pages/productos/crear-producto.dart';
-import 'package:ruthapp/pages/productos/modificar-producto.dart';
-import 'package:ruthapp/pages/productos/producto.dart';
-import 'package:ruthapp/pages/productos/servicioProductos.dart';
+import "package:cloud_firestore/cloud_firestore.dart";
+import "package:flutter/material.dart";
+import "package:ruthapp/pages/productos/crear-producto.dart";
+import "package:ruthapp/pages/productos/modificar-producto.dart";
+import "package:ruthapp/pages/productos/producto.dart";
 
 class ConsultaProductos extends StatelessWidget {
-  List<Producto> _productos;
-  ServicioProducto servicioProducto;
-
-  ConsultaProductos() {
-    servicioProducto = new ServicioProducto();
-    _productos = servicioProducto.consultarTodosProductos();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +19,24 @@ class ConsultaProductos extends StatelessWidget {
     );
   }
 
-  ListView _crearListaProductos(BuildContext context) {
-    return ListView(children: _crearProductos(context));
+  Widget _crearListaProductos(BuildContext context) {
+    print("Creando lista producto");
+    return StreamBuilder<QuerySnapshot>(
+      stream: Firestore.instance.collection("productos").snapshots(),
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (snapshot.hasError)
+          return new Text("Error: ${snapshot.error}");
+        switch (snapshot.connectionState) {
+          case ConnectionState.waiting: return new Text("Cargando...");
+          default:
+            return new ListView(
+              children: snapshot.data.documents.map((DocumentSnapshot document) {
+                return _crearListTile(Producto.fromSnapshot(document), context);
+              }).toList(),
+            );
+        }
+      },
+    );
   }
 
   Container _crearBotonCrearProducto(BuildContext context) {
@@ -43,12 +52,6 @@ class ConsultaProductos extends StatelessWidget {
             child: Icon(Icons.add),
           );
         }));
-  }
-
-  List<Widget> _crearProductos(BuildContext context) {
-    List<Widget> lista = new List<Widget>();
-    this._productos.forEach((producto) => lista.add(_crearListTile(producto, context)));
-    return lista;
   }
 
   ListTile _crearListTile(Producto producto, BuildContext context) {
