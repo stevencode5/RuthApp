@@ -3,8 +3,15 @@ import "package:flutter/material.dart";
 import "package:ruthapp/pages/productos/crear-producto.dart";
 import "package:ruthapp/pages/productos/modificar-producto.dart";
 import "package:ruthapp/pages/productos/producto.dart";
+import "package:ruthapp/pages/productos/servicioProductos.dart";
 
 class ConsultaProductos extends StatelessWidget {
+
+  ServicioProducto servicioProducto;
+
+  ConsultaProductos(){
+    this.servicioProducto = new ServicioProducto();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,13 +31,14 @@ class ConsultaProductos extends StatelessWidget {
     return StreamBuilder<QuerySnapshot>(
       stream: Firestore.instance.collection("productos").snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-        if (snapshot.hasError)
-          return Text("Error: ${snapshot.error}");
+        if (snapshot.hasError) return Text("Error: ${snapshot.error}");
         switch (snapshot.connectionState) {
-          case ConnectionState.waiting: return _crearTextoCargando();
+          case ConnectionState.waiting:
+            return _crearTextoCargando();
           default:
             return ListView(
-              children: snapshot.data.documents.map((DocumentSnapshot document) {
+              children:
+                  snapshot.data.documents.map((DocumentSnapshot document) {
                 return _crearListTile(Producto.fromSnapshot(document), context);
               }).toList(),
             );
@@ -39,15 +47,14 @@ class ConsultaProductos extends StatelessWidget {
     );
   }
 
-  Container _crearTextoCargando(){
+  Container _crearTextoCargando() {
     return Container(
-      child: Center(
-        child: Text(
-          "Cargando ...",
-          style: TextStyle(fontSize: 20),          
-        ),
-      )
-    );    
+        child: Center(
+      child: Text(
+        "Cargando ...",
+        style: TextStyle(fontSize: 20),
+      ),
+    ));
   }
 
   Container _crearBotonCrearProducto(BuildContext context) {
@@ -67,21 +74,22 @@ class ConsultaProductos extends StatelessWidget {
 
   ListTile _crearListTile(Producto producto, BuildContext context) {
     return ListTile(
-      subtitle: Text("Cantidad: ${producto.cantidad.toString()}"),
-      trailing: Text(producto.precio.toString()),
-      leading: Image(width: 70, image: new AssetImage(producto.imagen)),
-      title: Text(producto.nombre),
-      onLongPress: () {
-        _llamarAPantallaModificarProducto(producto, context);        
-      }
-    );
+        subtitle: Text("Cantidad: ${producto.cantidad.toString()}"),
+        trailing: Text(producto.precio.toString()),
+        leading: Image(width: 70, image: new AssetImage(producto.imagen)),
+        title: Text(producto.nombre),
+        onLongPress: () {
+          // servicioProducto.eliminarProducto(producto);
+          _llamarAPantallaModificarProducto(producto, context);
+        });
   }
 
-  void _llamarAPantallaModificarProducto(Producto producto, BuildContext context) async {
+  void _llamarAPantallaModificarProducto(
+      Producto producto, BuildContext context) async {
     print("Entra a modificar ${producto.nombre}");
 
-    final bool result = await Navigator.push(
-        context, MaterialPageRoute(builder: (context) => ModificarProducto(producto)));
+    final bool result = await Navigator.push(context,
+        MaterialPageRoute(builder: (context) => ModificarProducto(producto)));
     if (result) {
       Scaffold.of(context)
         ..removeCurrentSnackBar()
