@@ -74,13 +74,19 @@ class ConsultaProductos extends StatelessWidget {
 
   ListTile _crearListTile(Producto producto, BuildContext context) {
     return ListTile(
-        subtitle: Text('Cantidad: ${producto.cantidad.toString()}'),
-        trailing: Text(producto.precio.toString()),
+        subtitle: Text(
+          'Cantidad: ${producto.cantidad.toString()} \n\$${producto.precio}',
+          style: TextStyle(fontSize: 13)),
+        trailing: IconButton(
+          icon: Icon(Icons.edit),
+          onPressed: (){
+            _llamarAPantallaModificarProducto(producto, context);
+          }
+        ),
         leading: Image(width: 70, image: new AssetImage(producto.imagen)),
         title: Text(producto.nombre),
         onLongPress: () {
-          // servicioProducto.eliminarProducto(producto);
-          _llamarAPantallaModificarProducto(producto, context);
+          _mostrarConfirmacionEliminacion(producto, context);
         });
   }
 
@@ -106,5 +112,33 @@ class ConsultaProductos extends StatelessWidget {
         ..showSnackBar(SnackBar(content: Text('Nuevo producto agregado')));
     }
   }
+
+  void _mostrarConfirmacionEliminacion(Producto producto, BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: new Text('Confirmacion'),
+          content: new Text('¿Desea eliminar el producto ${producto.nombre}?'),
+          actions: <Widget>[
+            new FlatButton(
+              child: new Text('Cancelar'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              }
+            ),
+            new FlatButton(
+              child: new Text('Aceptar'),
+              onPressed: () {
+                Navigator.of(context).pop();
+                servicioProducto.eliminarProducto(producto);
+              },
+            )            
+          ],
+        );
+      },
+    );
+  }
+
 
 }
