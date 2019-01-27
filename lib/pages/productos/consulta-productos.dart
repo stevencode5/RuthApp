@@ -74,8 +74,15 @@ class ConsultaProductos extends StatelessWidget {
 
   ListTile _crearListTile(Producto producto, BuildContext context) {
     return ListTile(
-        subtitle: Text('Cantidad: ${producto.cantidad.toString()} - \$${producto.precio}'),
-        trailing: Icon(Icons.edit),
+        subtitle: Text(
+          'Cantidad: ${producto.cantidad.toString()} \n\$${producto.precio}',
+          style: TextStyle(fontSize: 13)),
+        trailing: IconButton(
+          icon: Icon(Icons.edit),
+          onPressed: (){
+            _llamarAPantallaModificarProducto(producto, context);
+          }
+        ),
         leading: Image(width: 70, image: new AssetImage(producto.imagen)),
         title: Text(producto.nombre),
         onLongPress: () {
