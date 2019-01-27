@@ -25,11 +25,11 @@ class ConsultaProductos extends StatelessWidget {
       stream: Firestore.instance.collection("productos").snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError)
-          return new Text("Error: ${snapshot.error}");
+          return Text("Error: ${snapshot.error}");
         switch (snapshot.connectionState) {
-          case ConnectionState.waiting: return new Text("Cargando...");
+          case ConnectionState.waiting: return _crearTextoCargando();
           default:
-            return new ListView(
+            return ListView(
               children: snapshot.data.documents.map((DocumentSnapshot document) {
                 return _crearListTile(Producto.fromSnapshot(document), context);
               }).toList(),
@@ -37,6 +37,17 @@ class ConsultaProductos extends StatelessWidget {
         }
       },
     );
+  }
+
+  Container _crearTextoCargando(){
+    return Container(
+      child: Center(
+        child: Text(
+          "Cargando ...",
+          style: TextStyle(fontSize: 20),          
+        ),
+      )
+    );    
   }
 
   Container _crearBotonCrearProducto(BuildContext context) {
