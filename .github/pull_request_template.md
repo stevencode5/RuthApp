@@ -7,6 +7,9 @@
 Tenga en cuenta los siguientes puntos:
 
 - [ ] Escribir suficiente información para que otros puedan analizar su Pull Request.
-- [ ] Explique los **detalles** del proceso de este cambio o que error/bug es soluciona con este Pull Request.
+
 - [ ] **Test plan (Requerido):** Demuestre que el código creado es sólido junto a las pruebas ejecutadas y sus evidencias (Adjunte imágenes o videos).
+
+- [ ] Explique los **detalles** del proceso de este cambio o que error/bug es soluciona con este Pull Request.
+
 - [ ] **Cierre de Issues:** Escriba `closes #XXXX` en su comentario para cerrar automáticamente el Issue que fue solucionado con su Pull Request.
