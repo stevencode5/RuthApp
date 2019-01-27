@@ -30,7 +30,7 @@ class _ModificarProductoState extends State<ModificarProducto> {
     this._productoModificar = widget.producto;
     return Scaffold(
         appBar: AppBar(
-          title: Text("Modificar - ${_productoModificar.nombre}"),
+          title: Text('Modificar - ${_productoModificar.nombre}'),
         ),
         body: _crearFormulario(context));
   }
@@ -115,13 +115,13 @@ class _ModificarProductoState extends State<ModificarProducto> {
         padding: EdgeInsets.only(left: 40.0, top: 20.0),
         child: RaisedButton(
           color: Colors.blue,
-          child: Text("Guardar", style: TextStyle(color: Colors.white)),
+          child: Text('Guardar', style: TextStyle(color: Colors.white)),
           onPressed: () => _mostrarConfirmacion(context)
         ));
   }
 
   void _modificarProducto(BuildContext context) {
-    print("Entro a modificar Producto !");
+    print('Entro a modificar Producto !');
     _formKey.currentState.save();
     this.servicioProducto.modificarProducto(this._productoModificar);
     Navigator.pop(context, true); // TODO implementar cuando respuesta no sea exitosa
@@ -132,17 +132,17 @@ class _ModificarProductoState extends State<ModificarProducto> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: new Text("Confirmacion"),
-          content: new Text("¿Esta seguro de modificar el producto?"),
+          title: new Text('Confirmacion'),
+          content: new Text('¿Esta seguro de modificar el producto?'),
           actions: <Widget>[
             new FlatButton(
-              child: new Text("Cerrar"),
+              child: new Text('Cerrar'),
               onPressed: () {
                 Navigator.of(context).pop();
               }
             ),
             new FlatButton(
-              child: new Text("Aceptar"),
+              child: new Text('Aceptar'),
               onPressed: () {
                 Navigator.of(context).pop();
                 _modificarProducto(context);

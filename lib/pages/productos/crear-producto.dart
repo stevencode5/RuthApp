@@ -25,7 +25,7 @@ class _CrearProductoState extends State<CrearProducto> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Nuevo producto"),
+          title: Text('Nuevo producto'),
         ),
         body: _crearFormulario(context));
   }
@@ -105,13 +105,13 @@ class _CrearProductoState extends State<CrearProducto> {
         padding: EdgeInsets.only(left: 40.0, top: 20.0),
         child: RaisedButton(
           color: Colors.blue,
-          child: Text("Crear", style: TextStyle(color: Colors.white)),
+          child: Text('Crear', style: TextStyle(color: Colors.white)),
           onPressed: () => _crearProducto(context),
         ));
   }
 
   void _crearProducto(BuildContext context) {
-    print("Entro a crear Producto !");
+    print('Entro a crear Producto !');
     _formKey.currentState.save();
     this.servicioProducto.crearProducto(this._nuevoProducto);
     Navigator.pop(context, true); // TODO implementar cuando respuesta no sea exitosa

@@ -15,7 +15,7 @@ class _RuthAppState extends State<RuthApp> {
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-          "RuthApp !",
+          'RuthApp !',
           style: TextStyle(
             fontSize: 30
           ),
@@ -37,7 +37,7 @@ class _RuthAppState extends State<RuthApp> {
                         builder: (context) => ConsultaProductos()),
                   );
                 },
-                child: new Text("Productos")),
+                child: new Text('Productos')),
           )
         ],
       ))),

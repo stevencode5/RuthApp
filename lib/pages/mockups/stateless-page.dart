@@ -5,11 +5,11 @@ class StlPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Pagina sin estado"),
+        title: Text('Pagina sin estado'),
       ),
       body: Container(
         child: Center(
-          child: Text("Esto es un texto !"),
+          child: Text('Esto es un texto !'),
           )
       ),
     );
