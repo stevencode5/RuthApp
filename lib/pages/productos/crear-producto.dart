@@ -27,7 +27,12 @@ class _CrearProductoState extends State<CrearProducto> {
         appBar: AppBar(
           title: Text('Nuevo producto'),
         ),
-        body: _crearFormulario(context));
+        body: Stack(
+          children: <Widget>[
+            _crearFormulario(context),
+            _crearBotonCrearProducto(context)
+          ],
+        ));
   }
 
   Form _crearFormulario(BuildContext context) {
@@ -39,8 +44,7 @@ class _CrearProductoState extends State<CrearProducto> {
           _crearTextFieldNombre(),
           _crearTextFieldPrecio(),
           _crearTextFieldCantidad(),
-          _crearTextFieldImagen(),
-          _crearBotonCargar(context)
+          _crearTextFieldImagen()
         ],
       ),
     );
@@ -100,14 +104,19 @@ class _CrearProductoState extends State<CrearProducto> {
     );
   }
 
-  Container _crearBotonCargar(BuildContext context) {
+  Container _crearBotonCrearProducto(BuildContext context) {
     return Container(
-        padding: EdgeInsets.only(left: 40.0, top: 20.0),
-        child: RaisedButton(
-          color: Colors.blue,
-          child: Text('Crear', style: TextStyle(color: Colors.white)),
-          onPressed: () => _crearProducto(context),
-        ));
+        padding: EdgeInsets.all(20.0),
+        alignment: Alignment.bottomRight,
+        child: Builder(builder: (BuildContext context) {
+          return FloatingActionButton(
+            tooltip: 'Crear Producto',
+            onPressed: () {
+              _crearProducto(context);
+            },
+            child: Icon(Icons.save),
+          );
+        }));
   }
 
   void _crearProducto(BuildContext context) {
@@ -116,5 +125,4 @@ class _CrearProductoState extends State<CrearProducto> {
     this.servicioProducto.crearProducto(this._nuevoProducto);
     Navigator.pop(context, true); // TODO implementar cuando respuesta no sea exitosa
   }
-
 }

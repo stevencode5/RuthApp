@@ -32,7 +32,12 @@ class _ModificarProductoState extends State<ModificarProducto> {
         appBar: AppBar(
           title: Text('Modificar - ${_productoModificar.nombre}'),
         ),
-        body: _crearFormulario(context));
+        body: Stack(
+          children: <Widget>[
+            _crearFormulario(context),
+            _crearBotonGuardar(context)
+          ],
+        ));
   }
 
   Form _crearFormulario(BuildContext context) {
@@ -44,8 +49,7 @@ class _ModificarProductoState extends State<ModificarProducto> {
           _crearTextFieldNombre(),
           _crearTextFieldPrecio(),
           _crearTextFieldCantidad(),
-          _crearTextFieldImagen(),
-          _crearBotonGuardar(context)
+          _crearTextFieldImagen()
         ],
       ),
     );
@@ -112,19 +116,24 @@ class _ModificarProductoState extends State<ModificarProducto> {
 
   Container _crearBotonGuardar(BuildContext context) {
     return Container(
-        padding: EdgeInsets.only(left: 40.0, top: 20.0),
-        child: RaisedButton(
-          color: Colors.blue,
-          child: Text('Guardar', style: TextStyle(color: Colors.white)),
-          onPressed: () => _mostrarConfirmacion(context)
-        ));
+        padding: EdgeInsets.all(20.0),
+        alignment: Alignment.bottomRight,
+        child: Builder(builder: (BuildContext context) {
+          return FloatingActionButton(
+            tooltip: 'Modificar Producto',
+            onPressed: () {
+              _mostrarConfirmacion(context);
+            },
+            child: Icon(Icons.edit),
+          );
+        }));
   }
 
   void _modificarProducto(BuildContext context) {
     print('Entro a modificar Producto !');
     _formKey.currentState.save();
     this.servicioProducto.modificarProducto(this._productoModificar);
-    Navigator.pop(context, true); // TODO implementar cuando respuesta no sea exitosa
+    Navigator.pop(context, true); 
   }
 
   void _mostrarConfirmacion(BuildContext context) {
