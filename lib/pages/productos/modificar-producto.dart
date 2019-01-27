@@ -145,7 +145,7 @@ class _ModificarProductoState extends State<ModificarProducto> {
           content: new Text('¿Esta seguro de modificar el producto?'),
           actions: <Widget>[
             new FlatButton(
-              child: new Text('Cerrar'),
+              child: new Text('Cancelar'),
               onPressed: () {
                 Navigator.of(context).pop();
               }
