@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:ruthapp/pages/productos/crear-producto.dart';
 import 'package:ruthapp/pages/productos/modificar-producto.dart';
@@ -5,19 +6,18 @@ import 'package:ruthapp/pages/productos/producto.dart';
 import 'package:ruthapp/pages/productos/servicioProductos.dart';
 
 class ConsultaProductos extends StatelessWidget {
-  List<Producto> _productos;
+
   ServicioProducto servicioProducto;
 
-  ConsultaProductos() {
-    servicioProducto = new ServicioProducto();
-    _productos = servicioProducto.consultarTodosProductos();
+  ConsultaProductos(){
+    this.servicioProducto = new ServicioProducto();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Productos"),
+        title: Text('Productos'),
       ),
       body: Stack(children: <Widget>[
         _crearListaProductos(context),
@@ -26,8 +26,35 @@ class ConsultaProductos extends StatelessWidget {
     );
   }
 
-  ListView _crearListaProductos(BuildContext context) {
-    return ListView(children: _crearProductos(context));
+  Widget _crearListaProductos(BuildContext context) {
+    print('Creando lista producto');
+    return StreamBuilder<QuerySnapshot>(
+      stream: Firestore.instance.collection('productos').snapshots(),
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (snapshot.hasError) return Text('Error: ${snapshot.error}');
+        switch (snapshot.connectionState) {
+          case ConnectionState.waiting:
+            return _crearTextoCargando();
+          default:
+            return ListView(
+              children:
+                  snapshot.data.documents.map((DocumentSnapshot document) {
+                return _crearListTile(Producto.fromSnapshot(document), context);
+              }).toList(),
+            );
+        }
+      },
+    );
+  }
+
+  Container _crearTextoCargando() {
+    return Container(
+        child: Center(
+      child: Text(
+        'Cargando ...',
+        style: TextStyle(fontSize: 20),
+      ),
+    ));
   }
 
   Container _crearBotonCrearProducto(BuildContext context) {
@@ -36,7 +63,7 @@ class ConsultaProductos extends StatelessWidget {
         alignment: Alignment.bottomRight,
         child: Builder(builder: (BuildContext context) {
           return FloatingActionButton(
-            tooltip: "Nuevo Producto",
+            tooltip: 'Nuevo Producto',
             onPressed: () {
               _llamarAPantallaCrearProducto(context);
             },
@@ -45,33 +72,28 @@ class ConsultaProductos extends StatelessWidget {
         }));
   }
 
-  List<Widget> _crearProductos(BuildContext context) {
-    List<Widget> lista = new List<Widget>();
-    this._productos.forEach((producto) => lista.add(_crearListTile(producto, context)));
-    return lista;
-  }
-
   ListTile _crearListTile(Producto producto, BuildContext context) {
     return ListTile(
-      subtitle: Text("Cantidad: ${producto.cantidad.toString()}"),
-      trailing: Text(producto.precio.toString()),
-      leading: Image(width: 70, image: new AssetImage(producto.imagen)),
-      title: Text(producto.nombre),
-      onLongPress: () {
-        _llamarAPantallaModificarProducto(producto, context);        
-      }
-    );
+        subtitle: Text('Cantidad: ${producto.cantidad.toString()}'),
+        trailing: Text(producto.precio.toString()),
+        leading: Image(width: 70, image: new AssetImage(producto.imagen)),
+        title: Text(producto.nombre),
+        onLongPress: () {
+          // servicioProducto.eliminarProducto(producto);
+          _llamarAPantallaModificarProducto(producto, context);
+        });
   }
 
-  void _llamarAPantallaModificarProducto(Producto producto, BuildContext context) async {
-    print("Entra a modificar ${producto.nombre}");
+  void _llamarAPantallaModificarProducto(
+      Producto producto, BuildContext context) async {
+    print('Entra a modificar ${producto.nombre}');
 
-    final bool result = await Navigator.push(
-        context, MaterialPageRoute(builder: (context) => ModificarProducto(producto)));
+    final bool result = await Navigator.push(context,
+        MaterialPageRoute(builder: (context) => ModificarProducto(producto)));
     if (result) {
       Scaffold.of(context)
         ..removeCurrentSnackBar()
-        ..showSnackBar(SnackBar(content: Text("Modificacion Exitosa")));
+        ..showSnackBar(SnackBar(content: Text('Modificacion Exitosa')));
     }
   }
 
@@ -81,7 +103,7 @@ class ConsultaProductos extends StatelessWidget {
     if (result) {
       Scaffold.of(context)
         ..removeCurrentSnackBar()
-        ..showSnackBar(SnackBar(content: Text("Nuevo producto agregado")));
+        ..showSnackBar(SnackBar(content: Text('Nuevo producto agregado')));
     }
   }
 

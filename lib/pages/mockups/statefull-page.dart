@@ -9,21 +9,21 @@ class StfPage extends StatefulWidget {
 
 class _StfPageState extends State<StfPage> {
   void espichar() {
-    print("Oprimio el boton !!");
+    print('Oprimio el boton !!');
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Pagina con Estado"),
+          title: Text('Pagina con Estado'),
         ),
         body: Container(
           child: Center(
             child: RaisedButton(
               padding: EdgeInsets.all(15.10),
               onPressed: espichar,
-              child: Text("Oprima !"),
+              child: Text('Oprima !'),
             ),
           )
         )
