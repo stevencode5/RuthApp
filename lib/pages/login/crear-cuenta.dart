@@ -33,7 +33,6 @@ class _CrearCuentaState extends State<CrearCuenta> {
             _crearTextFieldEmail(),
             _crearTextFieldPassword(),
             _crearBotonRegistrarCuenta(),
-            _crearMensajeError()
           ],
         ),
       ),
@@ -92,10 +91,6 @@ class _CrearCuentaState extends State<CrearCuenta> {
         onPressed: _validaryRegistrar
       )
     );
-  }
-
-  Container _crearMensajeError() {
-    return Container();
   }
 
   void _validaryRegistrar() {

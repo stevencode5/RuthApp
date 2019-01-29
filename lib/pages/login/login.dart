@@ -35,7 +35,6 @@ class _LoginState extends State<Login> {
             _crearTextFieldPassword(),
             _crearBotonIngresar(),
             _crearBotonRegistrar(),
-            _crearMensajeError()
           ],
         ),
       ),
@@ -107,10 +106,6 @@ class _LoginState extends State<Login> {
         Navigator.push(context, MaterialPageRoute(builder: (context) => CrearCuenta()));
       }
     );
-  }
-
-  Container _crearMensajeError() {
-    return Container();
   }
 
   void _validarIngresar() {
