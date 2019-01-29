@@ -118,17 +118,17 @@ class ConsultaProductos extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: new Text('Confirmacion'),
-          content: new Text('¿Desea eliminar el producto ${producto.nombre}?'),
+          title: Text('Confirmacion'),
+          content: Text('¿Desea eliminar el producto ${producto.nombre}?'),
           actions: <Widget>[
-            new FlatButton(
-              child: new Text('Cancelar'),
+            FlatButton(
+              child: Text('Cancelar'),
               onPressed: () {
                 Navigator.of(context).pop();
               }
             ),
-            new FlatButton(
-              child: new Text('Aceptar'),
+            FlatButton(
+              child: Text('Aceptar'),
               onPressed: () {
                 Navigator.of(context).pop();
                 servicioProducto.eliminarProducto(producto);

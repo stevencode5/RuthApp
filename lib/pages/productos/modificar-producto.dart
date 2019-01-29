@@ -21,8 +21,7 @@ class _ModificarProductoState extends State<ModificarProducto> {
   Producto _productoModificar;
 
   _ModificarProductoState() {
-    servicioProducto = new ServicioProducto();
-    _productoModificar = new Producto();
+    this.servicioProducto = new ServicioProducto();
   }
 
   @override
@@ -141,17 +140,17 @@ class _ModificarProductoState extends State<ModificarProducto> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: new Text('Confirmacion'),
-          content: new Text('¿Esta seguro de modificar el producto?'),
+          title: Text('Confirmacion'),
+          content: Text('¿Esta seguro de modificar el producto?'),
           actions: <Widget>[
-            new FlatButton(
-              child: new Text('Cancelar'),
+            FlatButton(
+              child: Text('Cancelar'),
               onPressed: () {
                 Navigator.of(context).pop();
               }
             ),
-            new FlatButton(
-              child: new Text('Aceptar'),
+            FlatButton(
+              child: Text('Aceptar'),
               onPressed: () {
                 Navigator.of(context).pop();
                 _modificarProducto(context);

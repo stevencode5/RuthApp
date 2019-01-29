@@ -17,8 +17,8 @@ class _CrearProductoState extends State<CrearProducto> {
   Producto _nuevoProducto;
 
   _CrearProductoState() {
-    servicioProducto = new ServicioProducto();
-    _nuevoProducto = new Producto();
+    this.servicioProducto = new ServicioProducto();
+    this._nuevoProducto = new Producto();
   }
 
   @override
