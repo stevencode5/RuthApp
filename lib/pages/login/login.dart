@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:ruthapp/pages/login/crear-cuenta.dart';
 import 'package:ruthapp/ruthapp.dart';
 
 class Login extends StatefulWidget {
@@ -16,7 +17,7 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Login"),
+          title: Text("Ingresar"),
         ),
         body: _creaFormulario());
   }
@@ -87,7 +88,7 @@ class _LoginState extends State<Login> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
         color: Colors.blue,
         child: Text(
-          'Login',
+          'Ingresar',
           style: TextStyle(fontSize: 20.0, color: Colors.white)
         ),
         onPressed: _validarIngresar,
@@ -102,7 +103,9 @@ class _LoginState extends State<Login> {
         "Crear cuenta",
         style: TextStyle(fontSize: 17, fontWeight: FontWeight.w300)
       ),
-      onPressed: _crearCuenta,
+      onPressed: () {
+        Navigator.push(context, MaterialPageRoute(builder: (context) => CrearCuenta()));
+      }
     );
   }
 
@@ -110,21 +113,49 @@ class _LoginState extends State<Login> {
     return Container();
   }
 
-  void _validarIngresar() async {
+  void _validarIngresar() {
     final _formState = _formKey.currentState;
     if (_formState.validate()) {
       _formState.save();
-      try {
-        FirebaseUser user = await FirebaseAuth.instance.signInWithEmailAndPassword(email: this._email, password: this._password);
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => RuthApp(user)));
-      } catch (e) {
-        print("Explotoooooooooooo !!");
-        print(e.message);
-      }
+      FirebaseAuth.instance
+      .signInWithEmailAndPassword(email: this._email, password: this._password)
+      .then((user) => Navigator.push(context, MaterialPageRoute(builder: (context) => RuthApp(user))))
+      .catchError((error) => _mostrarMensajeError(error.code, context));       
     }
-  } 
+  }
 
-  void _crearCuenta() {}
+  void _mostrarMensajeError(String codigoError, BuildContext context){
+    print(codigoError);
+    switch(codigoError){
+      case 'ERROR_INVALID_EMAIL': _mostrarConfirmacionEliminacion('El correo no tiene formato valido', context); 
+      break;
+      case 'ERROR_USER_NOT_FOUND': _mostrarConfirmacionEliminacion('Correo no registrado', context); 
+      break;
+      case 'ERROR_WRONG_PASSWORD': _mostrarConfirmacionEliminacion('Contraseña incorrecta', context); 
+      break;
+      case 'ERROR_USER_DISABLED': _mostrarConfirmacionEliminacion('Usuario inhabilitado, contacte al administrador', context); 
+      break;
+    }
+  }
+
+  void _mostrarConfirmacionEliminacion(String mensajeError, BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Error de ingreso'),
+          content: Text(mensajeError),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              }
+            )            
+          ],
+        );
+      },
+    );
+  } 
 
 }
