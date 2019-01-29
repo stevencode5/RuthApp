@@ -70,3 +70,4 @@ flutter:
   # see https://flutter.io/custom-fonts/#from-packages
   assets:
     - assets/imgs/dulce.png
+    - assets/imgs/LogoFlutter.png
