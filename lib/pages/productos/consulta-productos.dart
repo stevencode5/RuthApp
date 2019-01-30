@@ -3,15 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:ruthapp/pages/productos/crear-producto.dart';
 import 'package:ruthapp/pages/productos/modificar-producto.dart';
 import 'package:ruthapp/pages/productos/producto.dart';
-import 'package:ruthapp/pages/productos/servicioProductos.dart';
+import 'package:ruthapp/pages/productos/servicio-productos.dart';
 
 class ConsultaProductos extends StatelessWidget {
 
-  ServicioProducto servicioProducto;
-
-  ConsultaProductos(){
-    this.servicioProducto = new ServicioProducto();
-  }
+  ServicioProducto servicioProducto = new ServicioProducto();
 
   @override
   Widget build(BuildContext context) {
@@ -118,17 +114,17 @@ class ConsultaProductos extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: new Text('Confirmacion'),
-          content: new Text('¿Desea eliminar el producto ${producto.nombre}?'),
+          title: Text('Confirmacion'),
+          content: Text('¿Desea eliminar el producto ${producto.nombre}?'),
           actions: <Widget>[
-            new FlatButton(
-              child: new Text('Cancelar'),
+            FlatButton(
+              child: Text('Cancelar'),
               onPressed: () {
                 Navigator.of(context).pop();
               }
             ),
-            new FlatButton(
-              child: new Text('Aceptar'),
+            FlatButton(
+              child: Text('Aceptar'),
               onPressed: () {
                 Navigator.of(context).pop();
                 servicioProducto.eliminarProducto(producto);

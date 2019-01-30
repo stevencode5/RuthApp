@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ruthapp/pages/productos/producto.dart';
-import 'package:ruthapp/pages/productos/servicioProductos.dart';
+import 'package:ruthapp/pages/productos/servicio-productos.dart';
 
 class ModificarProducto extends StatefulWidget {
   final Producto producto;
@@ -16,14 +16,9 @@ class ModificarProducto extends StatefulWidget {
 class _ModificarProductoState extends State<ModificarProducto> {
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
 
-  ServicioProducto servicioProducto;
+  ServicioProducto servicioProducto = new ServicioProducto();
 
   Producto _productoModificar;
-
-  _ModificarProductoState() {
-    servicioProducto = new ServicioProducto();
-    _productoModificar = new Producto();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -141,17 +136,17 @@ class _ModificarProductoState extends State<ModificarProducto> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: new Text('Confirmacion'),
-          content: new Text('¿Esta seguro de modificar el producto?'),
+          title: Text('Confirmacion'),
+          content: Text('¿Esta seguro de modificar el producto?'),
           actions: <Widget>[
-            new FlatButton(
-              child: new Text('Cancelar'),
+            FlatButton(
+              child: Text('Cancelar'),
               onPressed: () {
                 Navigator.of(context).pop();
               }
             ),
-            new FlatButton(
-              child: new Text('Aceptar'),
+            FlatButton(
+              child: Text('Aceptar'),
               onPressed: () {
                 Navigator.of(context).pop();
                 _modificarProducto(context);

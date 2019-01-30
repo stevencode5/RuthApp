@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ruthapp/pages/productos/producto.dart';
-import 'package:ruthapp/pages/productos/servicioProductos.dart';
+import 'package:ruthapp/pages/productos/servicio-productos.dart';
 
 class CrearProducto extends StatefulWidget {
   @override
@@ -12,13 +12,12 @@ class CrearProducto extends StatefulWidget {
 class _CrearProductoState extends State<CrearProducto> {
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
 
-  ServicioProducto servicioProducto;
+  ServicioProducto servicioProducto = new ServicioProducto();
 
   Producto _nuevoProducto;
 
   _CrearProductoState() {
-    servicioProducto = new ServicioProducto();
-    _nuevoProducto = new Producto();
+    this._nuevoProducto = new Producto();
   }
 
   @override
@@ -123,6 +122,6 @@ class _CrearProductoState extends State<CrearProducto> {
     print('Entro a crear Producto !');
     _formKey.currentState.save();
     this.servicioProducto.crearProducto(this._nuevoProducto);
-    Navigator.pop(context, true); // TODO implementar cuando respuesta no sea exitosa
+    Navigator.pop(context, true); 
   }
 }
