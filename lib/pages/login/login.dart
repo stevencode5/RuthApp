@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:ruthapp/pages/login/crear-cuenta.dart';
+import 'package:ruthapp/pages/login/servicio-autenticacion.dart';
 import 'package:ruthapp/ruthapp.dart';
 
 class Login extends StatefulWidget {
@@ -13,11 +13,13 @@ class _LoginState extends State<Login> {
   String _password;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  ServicioAutenticacion servicioAutenticacion = new ServicioAutenticacion();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Ingresar"),
+          title: Text('Ingresar'),
         ),
         body: _creaFormulario());
   }
@@ -99,7 +101,7 @@ class _LoginState extends State<Login> {
     return FlatButton(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
       child: Text(
-        "Crear cuenta",
+        'Crear cuenta',
         style: TextStyle(fontSize: 17, fontWeight: FontWeight.w300)
       ),
       onPressed: () {
@@ -112,10 +114,9 @@ class _LoginState extends State<Login> {
     final _formState = _formKey.currentState;
     if (_formState.validate()) {
       _formState.save();
-      FirebaseAuth.instance
-      .signInWithEmailAndPassword(email: this._email, password: this._password)
-      .then((user) => Navigator.push(context, MaterialPageRoute(builder: (context) => RuthApp(user))))
-      .catchError((error) => _mostrarMensajeError(error.code, context));       
+      servicioAutenticacion.ingresar(this._email, this._password)
+        .then((user) => Navigator.push(context, MaterialPageRoute(builder: (context) => RuthApp(user))))
+        .catchError((error) => _mostrarMensajeError(error.code, context));       
     }
   }
 

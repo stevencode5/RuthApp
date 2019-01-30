@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:ruthapp/pages/login/servicio-autenticacion.dart';
 import 'package:ruthapp/pages/productos/consulta-productos.dart';
 
 class RuthApp extends StatefulWidget {
@@ -15,6 +16,9 @@ class RuthApp extends StatefulWidget {
 }
 
 class _RuthAppState extends State<RuthApp> {
+
+  ServicioAutenticacion servicioAutenticacion = new ServicioAutenticacion();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +34,7 @@ class _RuthAppState extends State<RuthApp> {
               child: Column(
 
         children: <Widget>[
-          Text("Usuario Logeado ${widget.usuario.email} !"),
+          Text('Usuario Logeado ${widget.usuario.email} !'),
           Container(
             padding: EdgeInsets.all(20),
             child: RaisedButton(
@@ -43,7 +47,17 @@ class _RuthAppState extends State<RuthApp> {
                         builder: (context) => ConsultaProductos()),
                   );
                 },
-                child: new Text('Productos')),
+                child: Text('Productos')),
+          ),
+          Container(
+            padding: EdgeInsets.all(20),
+            child: RaisedButton(
+                textColor: Colors.white,
+                color: Colors.blue,
+                onPressed: (){
+                  servicioAutenticacion.cerrarSesion();
+                },
+                child: Text('Cerrar sesion')),
           )
         ],
       ))),

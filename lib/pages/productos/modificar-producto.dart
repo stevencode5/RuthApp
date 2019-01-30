@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ruthapp/pages/productos/producto.dart';
-import 'package:ruthapp/pages/productos/servicioProductos.dart';
+import 'package:ruthapp/pages/productos/servicio-productos.dart';
 
 class ModificarProducto extends StatefulWidget {
   final Producto producto;
@@ -16,13 +16,9 @@ class ModificarProducto extends StatefulWidget {
 class _ModificarProductoState extends State<ModificarProducto> {
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
 
-  ServicioProducto servicioProducto;
+  ServicioProducto servicioProducto = new ServicioProducto();
 
   Producto _productoModificar;
-
-  _ModificarProductoState() {
-    this.servicioProducto = new ServicioProducto();
-  }
 
   @override
   Widget build(BuildContext context) {

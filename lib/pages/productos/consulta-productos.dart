@@ -3,15 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:ruthapp/pages/productos/crear-producto.dart';
 import 'package:ruthapp/pages/productos/modificar-producto.dart';
 import 'package:ruthapp/pages/productos/producto.dart';
-import 'package:ruthapp/pages/productos/servicioProductos.dart';
+import 'package:ruthapp/pages/productos/servicio-productos.dart';
 
 class ConsultaProductos extends StatelessWidget {
 
-  ServicioProducto servicioProducto;
-
-  ConsultaProductos(){
-    this.servicioProducto = new ServicioProducto();
-  }
+  ServicioProducto servicioProducto = new ServicioProducto();
 
   @override
   Widget build(BuildContext context) {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:ruthapp/pages/login/servicio-autenticacion.dart';
 import 'package:ruthapp/ruthapp.dart';
 
 class CrearCuenta extends StatefulWidget {
@@ -11,6 +11,8 @@ class _CrearCuentaState extends State<CrearCuenta> {
   String _email;
   String _password;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  ServicioAutenticacion servicioAutenticacion = new ServicioAutenticacion();
 
   @override
   Widget build(BuildContext context) {
@@ -97,10 +99,9 @@ class _CrearCuentaState extends State<CrearCuenta> {
     final _formState = _formKey.currentState;
     if (_formState.validate()) {
       _formState.save();
-      FirebaseAuth.instance
-      .createUserWithEmailAndPassword(email: this._email, password: this._password)
-      .then((user) => Navigator.push(context, MaterialPageRoute(builder: (context) => RuthApp(user))))
-      .catchError((error) => _mostrarMensajeError(error.code, context));
+      servicioAutenticacion.crearCuenta(this._email, this._password)
+        .then((user) => Navigator.push(context, MaterialPageRoute(builder: (context) => RuthApp(user))))
+        .catchError((error) => _mostrarMensajeError(error.code, context));
     }
   } 
 
