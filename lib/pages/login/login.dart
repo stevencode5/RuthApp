@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:ruthapp/pages/login/crear-cuenta.dart';
 import 'package:ruthapp/pages/login/servicio-autenticacion.dart';
 import 'package:ruthapp/ruthapp.dart';
@@ -37,6 +38,8 @@ class _LoginState extends State<Login> {
             _crearTextFieldPassword(),
             _crearBotonIngresar(),
             _crearBotonRegistrar(),
+            _crearSeparador(),
+            _crearBotonIngresarGoogle()
           ],
         ),
       ),
@@ -100,6 +103,7 @@ class _LoginState extends State<Login> {
   FlatButton _crearBotonRegistrar() {
     return FlatButton(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+      padding: EdgeInsets.only(bottom: 35),
       child: Text(
         'Crear cuenta',
         style: TextStyle(fontSize: 17, fontWeight: FontWeight.w300)
@@ -110,12 +114,38 @@ class _LoginState extends State<Login> {
     );
   }
 
+  Divider _crearSeparador() {
+    return Divider(
+      color: Colors.black,
+      height: 20,
+    );
+  }
+
+  Container _crearBotonIngresarGoogle() {
+    return Container(
+      child: RaisedButton(        
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+        color: Colors.blue,
+        child: Row(
+          children: <Widget>[
+            Icon(Icons.adb),
+            Text(
+              'Ingresar con Google',
+              style: TextStyle(fontSize: 20.0, color: Colors.white)
+            )
+          ],          
+        ),
+        onPressed: _ingresarConGoogle,
+      )
+    );
+  }
+
   void _validarIngresar() {
     final _formState = _formKey.currentState;
     if (_formState.validate()) {
       _formState.save();
       servicioAutenticacion.ingresar(this._email, this._password)
-        .then((user) => Navigator.push(context, MaterialPageRoute(builder: (context) => RuthApp(user))))
+        .then((usuario) => Navigator.push(context, MaterialPageRoute(builder: (context) => RuthApp())))
         .catchError((error) => _mostrarMensajeError(error.code, context));       
     }
   }
@@ -123,18 +153,18 @@ class _LoginState extends State<Login> {
   void _mostrarMensajeError(String codigoError, BuildContext context){
     print(codigoError);
     switch(codigoError){
-      case 'ERROR_INVALID_EMAIL': _mostrarConfirmacionEliminacion('El correo no tiene formato valido', context); 
+      case 'ERROR_INVALID_EMAIL': _mostrarMensajeAlerta('El correo no tiene formato valido', context); 
       break;
-      case 'ERROR_USER_NOT_FOUND': _mostrarConfirmacionEliminacion('Correo no registrado', context); 
+      case 'ERROR_USER_NOT_FOUND': _mostrarMensajeAlerta('Correo no registrado', context); 
       break;
-      case 'ERROR_WRONG_PASSWORD': _mostrarConfirmacionEliminacion('Contraseña incorrecta', context); 
+      case 'ERROR_WRONG_PASSWORD': _mostrarMensajeAlerta('Contraseña incorrecta', context); 
       break;
-      case 'ERROR_USER_DISABLED': _mostrarConfirmacionEliminacion('Usuario inhabilitado, contacte al administrador', context); 
+      case 'ERROR_USER_DISABLED': _mostrarMensajeAlerta('Usuario inhabilitado, contacte al administrador', context); 
       break;
     }
   }
 
-  void _mostrarConfirmacionEliminacion(String mensajeError, BuildContext context) {
+  void _mostrarMensajeAlerta(String mensajeError, BuildContext context) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -153,5 +183,16 @@ class _LoginState extends State<Login> {
       },
     );
   } 
+
+  void _ingresarConGoogle(){
+    servicioAutenticacion.ingresarConGoogle()
+      .then((usuario) => _validarIngresoGoogle(usuario))
+      .catchError((error) => _mostrarMensajeAlerta('Se presento un error al iniciar sesion con Google', context));    
+  }
+
+  void _validarIngresoGoogle(GoogleSignInAccount cuentaGoogle){
+    print('Cuenta de google ${cuentaGoogle.displayName}');
+    Navigator.push(context, MaterialPageRoute(builder: (context) => RuthApp()));
+  }
 
 }

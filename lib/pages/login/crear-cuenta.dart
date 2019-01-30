@@ -100,23 +100,23 @@ class _CrearCuentaState extends State<CrearCuenta> {
     if (_formState.validate()) {
       _formState.save();
       servicioAutenticacion.crearCuenta(this._email, this._password)
-        .then((user) => Navigator.push(context, MaterialPageRoute(builder: (context) => RuthApp(user))))
+        .then((usuario) => Navigator.push(context, MaterialPageRoute(builder: (context) => RuthApp())))
         .catchError((error) => _mostrarMensajeError(error.code, context));
     }
   } 
 
   void _mostrarMensajeError(String codigoError, BuildContext context){
     switch(codigoError){
-      case 'ERROR_INVALID_EMAIL': _mostrarConfirmacionEliminacion('El correo no tiene formato valido', context); 
+      case 'ERROR_INVALID_EMAIL': _mostrarMensajeAlerta('El correo no tiene formato valido', context); 
       break;
-      case 'ERROR_WEAK_PASSWORD': _mostrarConfirmacionEliminacion('La contraseña es muy debil, debe de tener al menos 6 caracteres', context); 
+      case 'ERROR_WEAK_PASSWORD': _mostrarMensajeAlerta('La contraseña es muy debil, debe de tener al menos 6 caracteres', context); 
       break;
-      case 'ERROR_EMAIL_ALREADY_IN_USE': _mostrarConfirmacionEliminacion('El correo ya esta siendo usado', context); 
+      case 'ERROR_EMAIL_ALREADY_IN_USE': _mostrarMensajeAlerta('El correo ya esta siendo usado', context); 
       break;
     }
   }
 
-  void _mostrarConfirmacionEliminacion(String mensajeError, BuildContext context) {
+  void _mostrarMensajeAlerta(String mensajeError, BuildContext context) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
