@@ -39,7 +39,8 @@ class _LoginState extends State<Login> {
             _crearBotonIngresar(),
             _crearBotonRegistrar(),
             _crearSeparador(),
-            _crearBotonIngresarGoogle()
+            _crearBotonIngresarGoogle(),
+            _crearBotonIngresarFacebook()
           ],
         ),
       ),
@@ -140,6 +141,25 @@ class _LoginState extends State<Login> {
     );
   }
 
+  Container _crearBotonIngresarFacebook() {
+    return Container(
+      child: RaisedButton(        
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+        color: Colors.blue,
+        child: Row(
+          children: <Widget>[
+            Icon(Icons.face),
+            Text(
+              'Ingresar con Facebook',
+              style: TextStyle(fontSize: 20.0, color: Colors.white)
+            )
+          ],          
+        ),
+        onPressed: _ingresarConFacebook,
+      )
+    );
+  }
+
   void _validarIngresar() {
     final _formState = _formKey.currentState;
     if (_formState.validate()) {
@@ -164,6 +184,21 @@ class _LoginState extends State<Login> {
     }
   }
 
+  void _ingresarConGoogle(){
+    servicioAutenticacion.ingresarConGoogle()
+      .then((usuario) => _validarIngresoGoogle(usuario))
+      .catchError((error) => _mostrarMensajeAlerta('Se presento un error al iniciar sesion con Google', context));    
+  }
+
+  void _validarIngresoGoogle(GoogleSignInAccount cuentaGoogle){
+    print('Cuenta de google ${cuentaGoogle.displayName}');
+    Navigator.push(context, MaterialPageRoute(builder: (context) => RuthApp()));
+  }
+
+  void _ingresarConFacebook(){
+    servicioAutenticacion.ingresarConFacebook();
+  }
+
   void _mostrarMensajeAlerta(String mensajeError, BuildContext context) {
     showDialog(
       context: context,
@@ -183,16 +218,5 @@ class _LoginState extends State<Login> {
       },
     );
   } 
-
-  void _ingresarConGoogle(){
-    servicioAutenticacion.ingresarConGoogle()
-      .then((usuario) => _validarIngresoGoogle(usuario))
-      .catchError((error) => _mostrarMensajeAlerta('Se presento un error al iniciar sesion con Google', context));    
-  }
-
-  void _validarIngresoGoogle(GoogleSignInAccount cuentaGoogle){
-    print('Cuenta de google ${cuentaGoogle.displayName}');
-    Navigator.push(context, MaterialPageRoute(builder: (context) => RuthApp()));
-  }
 
 }
