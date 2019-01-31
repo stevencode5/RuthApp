@@ -120,13 +120,17 @@ class _LoginState extends State<Login> {
 
   Container _crearBotonIngresarGoogle() {
     return Container(
+        width: 200,
         child: RaisedButton(
-          color: Colors.blue,
+          color: Color(0xFFFFFFFF),
           child: Row(
             children: <Widget>[
-              Icon(Icons.adb),
-              Text('Ingresar con Google',
-                  style: TextStyle(fontSize: 20.0, color: Colors.white))
+              Container(
+                padding: EdgeInsets.only(right: 25),
+                child: Image(width: 35, image: new AssetImage('assets/imgs/GoogleIcon.png'))
+              ),
+              Text('Continuar con Google',
+                  style: TextStyle(fontSize: 18, color: Colors.black87))
             ],
           ),
           onPressed: _ingresarConGoogle,
@@ -135,13 +139,17 @@ class _LoginState extends State<Login> {
 
   Container _crearBotonIngresarFacebook() {
     return Container(
+        width: 200,
         child: RaisedButton(
-          color: Colors.blue,
+          color: Color(0xFF586CA4),
           child: Row(
             children: <Widget>[
-              Icon(Icons.face),
-              Text('Ingresar con Facebook',
-                  style: TextStyle(fontSize: 20.0, color: Colors.white))
+              Container(
+                padding: EdgeInsets.only(right: 25),
+                child: Image(width: 35, image: new AssetImage('assets/imgs/FacebookIcon.png'))
+              ),
+              Text('Continuar con Facebook',
+                  style: TextStyle(fontSize: 18, color: Colors.white))
             ],
           ),
           onPressed: _ingresarConFacebook,
