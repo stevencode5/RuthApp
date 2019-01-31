@@ -49,7 +49,8 @@ class _RuthAppState extends State<RuthApp> {
                 textColor: Colors.white,
                 color: Colors.blue,
                 onPressed: (){
-                  servicioAutenticacion.cerrarSesionGoogle();
+                  servicioAutenticacion.cerrarSesion();
+                  Navigator.pop(context);
                 },
                 child: Text('Cerrar sesion')),
           )
