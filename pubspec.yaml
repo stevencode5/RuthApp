@@ -21,6 +21,8 @@ dependencies:
   cupertino_icons: ^0.1.2
   cloud_firestore: ^0.8.2+3
   firebase_auth: ^0.7.0
+  google_sign_in: ^4.0.0
+  flutter_facebook_login: ^1.2.0 
 
 dev_dependencies:
   flutter_test:
@@ -71,3 +73,5 @@ flutter:
   assets:
     - assets/imgs/dulce.png
     - assets/imgs/LogoFlutter.png
+    - assets/imgs/GoogleIcon.png
+    - assets/imgs/FacebookIcon.png

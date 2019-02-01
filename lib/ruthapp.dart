@@ -1,14 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ruthapp/pages/login/servicio-autenticacion.dart';
 import 'package:ruthapp/pages/productos/consulta-productos.dart';
 
 class RuthApp extends StatefulWidget {
-
-  final FirebaseUser usuario;
-
-  RuthApp(@required this.usuario);
-
   @override
   State<StatefulWidget> createState() {
     return _RuthAppState();
@@ -34,7 +28,7 @@ class _RuthAppState extends State<RuthApp> {
               child: Column(
 
         children: <Widget>[
-          Text('Usuario Logeado ${widget.usuario.email} !'),
+          Text('Buenas!'),
           Container(
             padding: EdgeInsets.all(20),
             child: RaisedButton(
@@ -56,6 +50,7 @@ class _RuthAppState extends State<RuthApp> {
                 color: Colors.blue,
                 onPressed: (){
                   servicioAutenticacion.cerrarSesion();
+                  Navigator.pop(context);
                 },
                 child: Text('Cerrar sesion')),
           )

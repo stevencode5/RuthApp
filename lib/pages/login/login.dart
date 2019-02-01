@@ -37,6 +37,9 @@ class _LoginState extends State<Login> {
             _crearTextFieldPassword(),
             _crearBotonIngresar(),
             _crearBotonRegistrar(),
+            _crearSeparador(),
+            _crearBotonIngresarGoogle(),
+            _crearBotonIngresarFacebook()
           ],
         ),
       ),
@@ -84,57 +87,129 @@ class _LoginState extends State<Login> {
 
   Container _crearBotonIngresar() {
     return Container(
-      padding: EdgeInsets.only(top: 35),
-      child: RaisedButton(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-        color: Colors.blue,
-        child: Text(
-          'Ingresar',
-          style: TextStyle(fontSize: 20.0, color: Colors.white)
-        ),
-        onPressed: _validarIngresar,
-      )
-    );
+        padding: EdgeInsets.only(top: 35),
+        child: RaisedButton(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+          color: Colors.blue,
+          child: Text('Ingresar',
+              style: TextStyle(fontSize: 20.0, color: Colors.white)),
+          onPressed: _validarIngresar,
+        ));
   }
 
   FlatButton _crearBotonRegistrar() {
     return FlatButton(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-      child: Text(
-        'Crear cuenta',
-        style: TextStyle(fontSize: 17, fontWeight: FontWeight.w300)
-      ),
-      onPressed: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => CrearCuenta()));
-      }
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+        padding: EdgeInsets.only(bottom: 35),
+        child: Text('Crear cuenta',
+            style: TextStyle(fontSize: 17, fontWeight: FontWeight.w300)),
+        onPressed: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => CrearCuenta()));
+        });
+  }
+
+  Divider _crearSeparador() {
+    return Divider(
+      color: Colors.black,
+      height: 20,
     );
+  }
+
+  Container _crearBotonIngresarGoogle() {
+    return Container(
+        width: 200,
+        child: RaisedButton(
+          color: Color(0xFFFFFFFF),
+          child: Row(
+            children: <Widget>[
+              Container(
+                padding: EdgeInsets.only(right: 25),
+                child: Image(width: 35, image: new AssetImage('assets/imgs/GoogleIcon.png'))
+              ),
+              Text('Continuar con Google',
+                  style: TextStyle(fontSize: 18, color: Colors.black87))
+            ],
+          ),
+          onPressed: _ingresarConGoogle,
+    ));
+  }
+
+  Container _crearBotonIngresarFacebook() {
+    return Container(
+        width: 200,
+        child: RaisedButton(
+          color: Color(0xFF586CA4),
+          child: Row(
+            children: <Widget>[
+              Container(
+                padding: EdgeInsets.only(right: 25),
+                child: Image(width: 35, image: new AssetImage('assets/imgs/FacebookIcon.png'))
+              ),
+              Text('Continuar con Facebook',
+                  style: TextStyle(fontSize: 18, color: Colors.white))
+            ],
+          ),
+          onPressed: _ingresarConFacebook,
+    ));
   }
 
   void _validarIngresar() {
     final _formState = _formKey.currentState;
     if (_formState.validate()) {
       _formState.save();
-      servicioAutenticacion.ingresar(this._email, this._password)
-        .then((user) => Navigator.push(context, MaterialPageRoute(builder: (context) => RuthApp(user))))
-        .catchError((error) => _mostrarMensajeError(error.code, context));       
+      servicioAutenticacion
+          .ingresar(this._email, this._password)
+          .then((usuario) => Navigator.push(
+              context, MaterialPageRoute(builder: (context) => RuthApp())))
+          .catchError((error) => _mostrarMensajeError(error.code, context));
     }
   }
 
-  void _mostrarMensajeError(String codigoError, BuildContext context){
+  void _mostrarMensajeError(String codigoError, BuildContext context) {
     print(codigoError);
-    switch(codigoError){
-      case 'ERROR_INVALID_EMAIL': _mostrarConfirmacionEliminacion('El correo no tiene formato valido', context); 
-      break;
-      case 'ERROR_USER_NOT_FOUND': _mostrarConfirmacionEliminacion('Correo no registrado', context); 
-      break;
-      case 'ERROR_WRONG_PASSWORD': _mostrarConfirmacionEliminacion('Contraseña incorrecta', context); 
-      break;
-      case 'ERROR_USER_DISABLED': _mostrarConfirmacionEliminacion('Usuario inhabilitado, contacte al administrador', context); 
-      break;
+    switch (codigoError) {
+      case 'ERROR_INVALID_EMAIL':
+        _mostrarMensajeAlerta('El correo no tiene formato valido', context);
+        break;
+      case 'ERROR_USER_NOT_FOUND':
+        _mostrarMensajeAlerta('Correo no registrado', context);
+        break;
+      case 'ERROR_WRONG_PASSWORD':
+        _mostrarMensajeAlerta('Contraseña incorrecta', context);
+        break;
+      case 'ERROR_USER_DISABLED':
+        _mostrarMensajeAlerta(
+            'Usuario inhabilitado, contacte al administrador', context);
+        break;
     }
   }
 
-  void _mostrarConfirmacionEliminacion(String mensajeError, BuildContext context) {
+  void _ingresarConGoogle() {
+    servicioAutenticacion.ingresarConGoogle()
+      .then((result) {
+        print('Usuario : ${result.displayName}');
+        Navigator.push(context, MaterialPageRoute(builder: (context) => RuthApp()));
+      })
+      .catchError((error){
+        print(error);
+      });
+  }
+
+  void _ingresarConFacebook() {
+    servicioAutenticacion.ingresarConFacebook()
+      .then((result) {
+        print('Usuario : ${result.displayName}');
+        Navigator.push(context, MaterialPageRoute(builder: (context) => RuthApp()));
+      })
+      .catchError((error){
+        print(error);
+      });
+  }
+
+  void _mostrarMensajeAlerta(String mensajeError, BuildContext context) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -143,15 +218,13 @@ class _LoginState extends State<Login> {
           content: Text(mensajeError),
           actions: <Widget>[
             FlatButton(
-              child: Text('OK'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              }
-            )            
+                child: Text('OK'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                })
           ],
         );
       },
     );
-  } 
-
+  }
 }
