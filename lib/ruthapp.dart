@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ruthapp/menu-principal.dart';
 import 'package:ruthapp/pages/login/servicio-autenticacion.dart';
 import 'package:ruthapp/pages/productos/consulta-productos.dart';
 
@@ -23,6 +24,7 @@ class _RuthAppState extends State<RuthApp> {
           style: TextStyle(fontSize: 30),
         ),
       ),
+      drawer: MenuPrincipal(),
       body: Container(
           child: Center(
               child: Column(
