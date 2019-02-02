@@ -127,7 +127,7 @@ class _LoginState extends State<Login> {
             children: <Widget>[
               Container(
                 padding: EdgeInsets.only(right: 25),
-                child: Image(width: 35, image: new AssetImage('assets/imgs/GoogleIcon.png'))
+                child: Image(width: 35, image: AssetImage('assets/imgs/GoogleIcon.png'))
               ),
               Text('Continuar con Google',
                   style: TextStyle(fontSize: 18, color: Colors.black87))
@@ -146,7 +146,7 @@ class _LoginState extends State<Login> {
             children: <Widget>[
               Container(
                 padding: EdgeInsets.only(right: 25),
-                child: Image(width: 35, image: new AssetImage('assets/imgs/FacebookIcon.png'))
+                child: Image(width: 35, image: AssetImage('assets/imgs/FacebookIcon.png'))
               ),
               Text('Continuar con Facebook',
                   style: TextStyle(fontSize: 18, color: Colors.white))

@@ -79,7 +79,7 @@ class ConsultaProductos extends StatelessWidget {
             _llamarAPantallaModificarProducto(producto, context);
           }
         ),
-        leading: Image(width: 70, image: new AssetImage(producto.imagen)),
+        leading: Image(width: 70, image: AssetImage(producto.imagen)),
         title: Text(producto.nombre),
         onLongPress: () {
           _mostrarConfirmacionEliminacion(producto, context);
