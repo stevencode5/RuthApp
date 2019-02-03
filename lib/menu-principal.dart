@@ -10,7 +10,7 @@ class MenuPrincipal extends StatelessWidget {
 
   MenuPrincipal() {
     servicioAutenticacion
-        .getUsuarioActual()
+        .consultarUsuarioActual()
         .then((usuario) => this._usuario = usuario);
   }
 
