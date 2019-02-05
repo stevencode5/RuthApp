@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:ruthapp/pages/login/login.dart';
 import 'package:ruthapp/pages/login/servicio-autenticacion.dart';
 
 class MenuPrincipal extends StatelessWidget {
@@ -62,8 +61,7 @@ class MenuPrincipal extends StatelessWidget {
 
   void _cerrarSesion(BuildContext context) {
     servicioAutenticacion.cerrarSesion();
-    // TODO - Limpiar navegacion. Enviar a pantalla login
-    //Navigator.pushReplacement(context,  MaterialPageRoute(builder: (context) =>  Login()));
-    //Navigator.of(context).pushNamedAndRemoveUntil('/screen4', (Route<dynamic> route) => false);
+    Navigator.of(context).pushNamedAndRemoveUntil('/login/login', (Route<dynamic> route) => false);
   }
+  
 }
