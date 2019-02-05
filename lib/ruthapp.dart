@@ -37,11 +37,7 @@ class _RuthAppState extends State<RuthApp> {
                 textColor: Colors.white,
                 color: Colors.blue,
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => ConsultaProductos()),
-                  );
+                  Navigator.of(context).pushNamed('/productos/consulta-producto');                  
                 },
                 child: Text('Productos')),
           ),

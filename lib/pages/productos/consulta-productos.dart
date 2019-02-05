@@ -90,8 +90,7 @@ class ConsultaProductos extends StatelessWidget {
       Producto producto, BuildContext context) async {
     print('Entra a modificar ${producto.nombre}');
 
-    final bool result = await Navigator.push(context,
-        MaterialPageRoute(builder: (context) => ModificarProducto(producto)));
+    final bool result = await Navigator.push(context, MaterialPageRoute(builder: (context) => ModificarProducto(producto)));
     if (result) {
       Scaffold.of(context)
         ..removeCurrentSnackBar()
@@ -100,8 +99,7 @@ class ConsultaProductos extends StatelessWidget {
   }
 
   void _llamarAPantallaCrearProducto(BuildContext context) async {
-    final bool result = await Navigator.push(
-        context, MaterialPageRoute(builder: (context) => CrearProducto()));
+    final bool result = await Navigator.push(context, MaterialPageRoute(builder: (context) => CrearProducto()));
     if (result) {
       Scaffold.of(context)
         ..removeCurrentSnackBar()

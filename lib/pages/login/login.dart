@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ruthapp/pages/login/crear-cuenta.dart';
 import 'package:ruthapp/pages/login/servicio-autenticacion.dart';
-import 'package:ruthapp/ruthapp.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -106,8 +104,7 @@ class _LoginState extends State<Login> {
         child: Text('Crear cuenta',
             style: TextStyle(fontSize: 17, fontWeight: FontWeight.w300)),
         onPressed: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => CrearCuenta()));
+          Navigator.of(context).pushNamed('/login/crear-cuenta');
         });
   }
 
@@ -162,8 +159,7 @@ class _LoginState extends State<Login> {
       _formState.save();
       servicioAutenticacion
           .ingresar(this._email, this._password)
-          .then((usuario) => Navigator.push(
-              context, MaterialPageRoute(builder: (context) => RuthApp())))
+          .then((usuario) => Navigator.of(context).pushReplacementNamed('/home'))
           .catchError((error) => _mostrarMensajeError(error.code, context));
     }
   }
@@ -191,7 +187,7 @@ class _LoginState extends State<Login> {
     servicioAutenticacion.ingresarConGoogle()
       .then((result) {
         print('Usuario : ${result.displayName}');
-        Navigator.push(context, MaterialPageRoute(builder: (context) => RuthApp()));
+        Navigator.of(context).pushReplacementNamed('/home');
       })
       .catchError((error){
         print(error);
@@ -202,7 +198,7 @@ class _LoginState extends State<Login> {
     servicioAutenticacion.ingresarConFacebook()
       .then((result) {
         print('Usuario : ${result.displayName}');
-        Navigator.push(context, MaterialPageRoute(builder: (context) => RuthApp()));
+        Navigator.of(context).pushReplacementNamed('/home');
       })
       .catchError((error){
         print(error);
