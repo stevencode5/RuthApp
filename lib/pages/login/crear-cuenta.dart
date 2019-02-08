@@ -100,7 +100,7 @@ class _CrearCuentaState extends State<CrearCuenta> {
     if (_formState.validate()) {
       _formState.save();
       servicioAutenticacion.crearCuenta(this._email, this._password)
-        .then((usuario) => Navigator.push(context, MaterialPageRoute(builder: (context) => RuthApp())))
+        .then((usuario) => Navigator.of(context).pushReplacementNamed('/home'))
         .catchError((error) => _mostrarMensajeError(error.code, context));
     }
   } 

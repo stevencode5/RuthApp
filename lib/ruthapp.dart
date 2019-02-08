@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ruthapp/pages/login/servicio-autenticacion.dart';
-import 'package:ruthapp/pages/productos/consulta-productos.dart';
+import 'package:ruthapp/menu-principal.dart';
 
 class RuthApp extends StatefulWidget {
   @override
@@ -10,8 +9,6 @@ class RuthApp extends StatefulWidget {
 }
 
 class _RuthAppState extends State<RuthApp> {
-
-  ServicioAutenticacion servicioAutenticacion = new ServicioAutenticacion();
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +20,7 @@ class _RuthAppState extends State<RuthApp> {
           style: TextStyle(fontSize: 30),
         ),
       ),
+      drawer: MenuPrincipal(),
       body: Container(
           child: Center(
               child: Column(
@@ -35,24 +33,9 @@ class _RuthAppState extends State<RuthApp> {
                 textColor: Colors.white,
                 color: Colors.blue,
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => ConsultaProductos()),
-                  );
+                  Navigator.of(context).pushNamed('/productos/consulta-producto');                  
                 },
                 child: Text('Productos')),
-          ),
-          Container(
-            padding: EdgeInsets.all(20),
-            child: RaisedButton(
-                textColor: Colors.white,
-                color: Colors.blue,
-                onPressed: (){
-                  servicioAutenticacion.cerrarSesion();
-                  Navigator.pop(context);
-                },
-                child: Text('Cerrar sesion')),
           )
         ],
       ))),

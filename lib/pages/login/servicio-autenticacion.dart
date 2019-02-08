@@ -9,8 +9,8 @@ class ServicioAutenticacion {
   GoogleSignIn _googleSignIn = GoogleSignIn();
   FacebookLogin _facebookLogin = FacebookLogin();
 
-  Future<FirebaseUser> getUsuarioActual() {
-    print('Entro a consultar usuario actual');
+  Future<FirebaseUser> consultarUsuarioActual() {
+    print('Consultando usuario actual');
     return _firebaseAuth.currentUser();
   }
 
@@ -27,6 +27,7 @@ class ServicioAutenticacion {
   }
 
   Future<FirebaseUser> ingresarConGoogle() async {
+    print("Ingresar con Google");
     GoogleSignInAccount googleUser = await _googleSignIn.signIn();
     GoogleSignInAuthentication googleAuth = await googleUser.authentication;
     AuthCredential credential = GoogleAuthProvider.getCredential(
@@ -37,6 +38,7 @@ class ServicioAutenticacion {
   }
 
   Future<FirebaseUser> ingresarConFacebook() async {
+    print("Ingresar con facebook");
     FacebookLoginResult facebookUser = await _facebookLogin.logInWithReadPermissions(['email', 'public_profile']);   
     switch (facebookUser.status) {
       case FacebookLoginStatus.loggedIn:
