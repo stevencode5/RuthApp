@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ruthapp/pages/login/servicio-autenticacion.dart';
-import 'package:ruthapp/ruthapp.dart';
+import 'package:ruthapp/autenticacion/servicio-autenticacion.dart';
 
 class CrearCuenta extends StatefulWidget {
   @override
@@ -100,7 +99,7 @@ class _CrearCuentaState extends State<CrearCuenta> {
     if (_formState.validate()) {
       _formState.save();
       servicioAutenticacion.crearCuenta(this._email, this._password)
-        .then((usuario) => Navigator.of(context).pushReplacementNamed('/home'))
+        .then((usuario) => Navigator.of(context).pushReplacementNamed('/general/home-inicio'))
         .catchError((error) => _mostrarMensajeError(error.code, context));
     }
   } 

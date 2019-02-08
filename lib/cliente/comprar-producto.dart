@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:ruthapp/pages/cliente/productos-disponibles.dart';
-import 'package:ruthapp/pages/cliente/productos-favoritos.dart';
-import 'package:ruthapp/pages/cliente/resumen-compra.dart';
+import 'package:ruthapp/cliente/productos-disponibles.dart';
+import 'package:ruthapp/cliente/productos-favoritos.dart';
+import 'package:ruthapp/cliente/resumen-compra.dart';
 
 class ComprarProducto extends StatefulWidget {
   @override

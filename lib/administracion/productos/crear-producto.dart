@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:ruthapp/pages/productos/producto.dart';
-import 'package:ruthapp/pages/productos/servicio-productos.dart';
+import 'package:ruthapp/administracion/productos/producto.dart';
+import 'package:ruthapp/administracion/productos/servicio-productos.dart';
 
 class CrearProducto extends StatefulWidget {
   @override

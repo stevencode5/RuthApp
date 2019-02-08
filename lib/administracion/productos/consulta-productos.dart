@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:ruthapp/pages/productos/crear-producto.dart';
-import 'package:ruthapp/pages/productos/modificar-producto.dart';
-import 'package:ruthapp/pages/productos/producto.dart';
-import 'package:ruthapp/pages/productos/servicio-productos.dart';
+import 'package:ruthapp/administracion/productos/crear-producto.dart';
+import 'package:ruthapp/administracion/productos/modificar-producto.dart';
+import 'package:ruthapp/administracion/productos/producto.dart';
+import 'package:ruthapp/administracion/productos/servicio-productos.dart';
 
 class ConsultaProductos extends StatefulWidget {
 
@@ -107,7 +107,7 @@ class _ConsultaProductosState extends State<ConsultaProductos> {
   }
 
   void _llamarAPantallaCrearProducto(BuildContext context) async {
-    final bool result = await Navigator.push(context, MaterialPageRoute(builder: (context) => CrearProducto()));
+    final bool result = await Navigator.pushNamed(context, '/administracion/productos/crear-producto');
     if (result) {
       Scaffold.of(context)
         ..removeCurrentSnackBar()

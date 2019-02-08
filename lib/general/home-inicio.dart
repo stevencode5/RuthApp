@@ -39,7 +39,7 @@ class HomeInicio extends StatelessWidget {
             color: Colors.blue,
             child: Text('Nueva tienda'),
             onPressed: (){
-              Navigator.of(context).pushNamed('/administracion/crear-tienda');
+              Navigator.of(context).pushNamed('/administracion/tienda/crear-tienda');
             },
           )
         ],
@@ -58,7 +58,7 @@ class HomeInicio extends StatelessWidget {
             color: Colors.blue,
             child: Text('Suscribirse a tienda'),
             onPressed: (){
-              Navigator.of(context).pushNamed('/administracion/suscribirse-tienda');
+              Navigator.of(context).pushNamed('/cliente/suscribirse-tienda');
             },
           )
         ],

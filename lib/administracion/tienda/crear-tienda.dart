@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:ruthapp/pages/administracion/servicio-tienda.dart';
-import 'package:ruthapp/pages/administracion/tienda.dart';
+import 'package:ruthapp/administracion/tienda/servicio-tienda.dart';
+import 'package:ruthapp/administracion/tienda/tienda.dart';
 
 class CrearTienda extends StatefulWidget {
   @override

@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:ruthapp/pages/login/crear-cuenta.dart';
-import 'package:ruthapp/pages/login/login.dart';
-import 'package:ruthapp/pages/productos/consulta-productos.dart';
-import 'package:ruthapp/pages/productos/crear-producto.dart';
-import 'package:ruthapp/ruthapp.dart';
+import 'package:ruthapp/administracion/administracion-tienda.dart';
+import 'package:ruthapp/administracion/productos/consulta-productos.dart';
+import 'package:ruthapp/administracion/productos/crear-producto.dart';
+import 'package:ruthapp/administracion/tienda/crear-tienda.dart';
+import 'package:ruthapp/autenticacion/crear-cuenta.dart';
+import 'package:ruthapp/autenticacion/login.dart';
+import 'package:ruthapp/cliente/comprar-producto.dart';
+import 'package:ruthapp/cliente/suscribirse-tienda.dart';
+import 'package:ruthapp/general/administracion-usuario.dart';
+import 'package:ruthapp/general/home-inicio.dart';
 
 void main() => runApp(MyApp());
 
@@ -15,11 +20,16 @@ class MyApp extends StatelessWidget {
         title: 'RuthApp',
         home: Login(),
         routes: <String, WidgetBuilder> {
-          '/home': (BuildContext context) => RuthApp(),
-          '/login/crear-cuenta': (BuildContext context) => CrearCuenta(),
-          '/login/login': (BuildContext context) => Login(),
-          '/productos/consulta-producto': (BuildContext context) => ConsultaProductos(),
-          '/productos/crear-producto': (BuildContext context) => CrearProducto(),
+          '/administracion/productos/consulta-producto' : (BuildContext context) => ConsultaProductos(),
+          '/administracion/productos/crear-producto' : (BuildContext context) => CrearProducto(),
+          '/administracion/tienda/crear-tienda' : (BuildContext context) => CrearTienda(),
+          '/administracion/administracion-tienda' : (BuildContext context) => AdministracionTienda(),
+          '/autenticacion/crear-cuenta' : (BuildContext context) => CrearCuenta(),
+          '/autenticacion/login' : (BuildContext context) => Login(),
+          '/cliente/comprar-producto' : (BuildContext context) => ComprarProducto(),
+          '/cliente/suscribirse-tienda' : (BuildContext context) => SuscribirseTienda(),
+          '/general/administracion-usuario' : (BuildContext context) => AdministracionUsuario(),
+          '/general/home-inicio' : (BuildContext context) => HomeInicio()          
         }        
       );
   }

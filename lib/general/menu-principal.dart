@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:ruthapp/pages/administracion-usuario.dart';
-import 'package:ruthapp/pages/login/servicio-autenticacion.dart';
+import 'package:ruthapp/autenticacion/servicio-autenticacion.dart';
+import 'package:ruthapp/general/administracion-usuario.dart';
 
 class MenuPrincipal extends StatelessWidget {
   ServicioAutenticacion servicioAutenticacion = new ServicioAutenticacion();
@@ -58,7 +58,7 @@ class MenuPrincipal extends StatelessWidget {
       trailing: Icon(Icons.edit),
       onTap: () {
         Navigator.pop(context);
-        Navigator.push(context,  MaterialPageRoute(builder: (context) =>  AdministracionUsuario()));
+        Navigator.pushNamed(context, '/general/administracion-usuario');
       },
     );
   }
@@ -74,7 +74,7 @@ class MenuPrincipal extends StatelessWidget {
 
   void _cerrarSesion(BuildContext context) {
     servicioAutenticacion.cerrarSesion();
-    Navigator.of(context).pushNamedAndRemoveUntil('/login/login', (Route<dynamic> route) => false);
+    Navigator.of(context).pushNamedAndRemoveUntil('/autenticacion/login', (Route<dynamic> route) => false);
   }
   
 }

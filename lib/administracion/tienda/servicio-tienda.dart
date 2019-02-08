@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:ruthapp/pages/administracion/tienda.dart';
-import 'package:ruthapp/pages/login/servicio-autenticacion.dart';
+import 'package:ruthapp/administracion/tienda/tienda.dart';
+import 'package:ruthapp/autenticacion/servicio-autenticacion.dart';
 
 class ServicioTienda {
 
@@ -9,7 +9,7 @@ class ServicioTienda {
 
   void crearTienda(Tienda nuevaTienda) async {
     print('Entro a crear tienda ${nuevaTienda.nombre}'); 
-    FirebaseUser tendero = await servicioAutenticacion.getUsuarioActual();   
+    FirebaseUser tendero = await servicioAutenticacion.consultarUsuarioActual();   
     Firestore.instance.collection('tiendas').document().setData({
       'nombre': nuevaTienda.nombre,
       'tendero': tendero.email,
