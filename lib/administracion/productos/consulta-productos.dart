@@ -107,7 +107,7 @@ class _ConsultaProductosState extends State<ConsultaProductos> {
   }
 
   void _llamarAPantallaCrearProducto(BuildContext context) async {
-    final bool result = await Navigator.pushNamed(context, '/administracion/productos/crear-producto');
+    final bool result = await Navigator.push(context, MaterialPageRoute(builder: (context) => CrearProducto()));
     if (result) {
       Scaffold.of(context)
         ..removeCurrentSnackBar()

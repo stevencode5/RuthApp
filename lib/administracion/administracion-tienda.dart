@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ruthapp/general/menu-principal.dart';
 
 class AdministracionTienda extends StatelessWidget {
   @override
@@ -7,6 +8,7 @@ class AdministracionTienda extends StatelessWidget {
       appBar: AppBar(
         title: Text('Administracion Tienda'),
       ),
+      drawer: MenuPrincipal(),
       body: Container(
         child: Center(
           child: Text('Esto es un texto !'),

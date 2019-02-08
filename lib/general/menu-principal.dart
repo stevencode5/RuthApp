@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ruthapp/autenticacion/servicio-autenticacion.dart';
-import 'package:ruthapp/general/administracion-usuario.dart';
 
 class MenuPrincipal extends StatelessWidget {
   ServicioAutenticacion servicioAutenticacion = new ServicioAutenticacion();
@@ -19,9 +18,11 @@ class MenuPrincipal extends StatelessWidget {
     return Drawer(
         child: ListView(
       children: <Widget>[
-        _crearInformacionUsuario(),
-        _crearLink(context),
-        _crearLink(context),
+        _crearPanelInformacionUsuario(),
+        _crearDivisionTitulo('Administración'),
+        _crearLinkProductos(context),
+        _crearDivisionTitulo('Cliente'),
+        _crearLinkComprarProductos(context),
         Divider(),
         _crearLinkAdministracionUsuario(context),
         _crearBotonCerrarSesion(context)
@@ -29,7 +30,7 @@ class MenuPrincipal extends StatelessWidget {
     ));
   }
 
-  UserAccountsDrawerHeader _crearInformacionUsuario() {
+  UserAccountsDrawerHeader _crearPanelInformacionUsuario() {
     return UserAccountsDrawerHeader(
       accountName: Text(_usuario.displayName),
       accountEmail: Text(_usuario.email),
@@ -41,13 +42,31 @@ class MenuPrincipal extends StatelessWidget {
     );
   }
 
-  ListTile _crearLink(BuildContext context) {
+  ListTile _crearDivisionTitulo(String titulo) {
+    return ListTile(    
+      enabled: false,
+      title: Text(titulo)
+    );
+  }
+
+  ListTile _crearLinkProductos(BuildContext context) {
     return ListTile(
-      title: Text('Item 1'),
-      trailing: Icon(Icons.android),
+      title: Text('Productos'),
+      leading: Icon(Icons.store),
       onTap: () {
         Navigator.pop(context);
-        // Navigator.push(context,  MaterialPageRoute(builder: (context) =>  FirstPage()));
+        Navigator.pushNamed(context, '/administracion/productos/consulta-producto');
+      },
+    );
+  }
+
+  ListTile _crearLinkComprarProductos(BuildContext context) {
+    return ListTile(
+      title: Text('Comprar'),
+      leading: Icon(Icons.add_shopping_cart),
+      onTap: () {
+        Navigator.pop(context);
+        Navigator.pushNamed(context, '/cliente/comprar-producto');
       },
     );
   }
