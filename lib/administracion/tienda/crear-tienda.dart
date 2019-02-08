@@ -38,6 +38,7 @@ class _CrearTiendaState extends State<CrearTienda> {
         padding: EdgeInsets.symmetric(horizontal: 16.0),
         children: <Widget>[
           _crearTextFieldNombre(),
+          _crearTextFieldDescripcion(),
           _crearTextFieldImagen()
         ],
       ),
@@ -53,6 +54,19 @@ class _CrearTiendaState extends State<CrearTienda> {
         icon: Icon(Icons.local_grocery_store),
         hintText: 'Ingrese el nombre de la tienda',
         labelText: 'Nombre',
+      ),
+    );
+  }
+
+  TextFormField _crearTextFieldDescripcion() {
+    return TextFormField(
+      onSaved: (String descripcion) {
+        this._nuevaTienda.descripcion = descripcion;
+      },
+      decoration: InputDecoration(
+        icon: Icon(Icons.description),
+        hintText: 'Ingrese una descripción',
+        labelText: 'Descripción',
       ),
     );
   }

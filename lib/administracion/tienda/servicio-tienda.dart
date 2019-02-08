@@ -13,6 +13,7 @@ class ServicioTienda {
     Firestore.instance.collection('tiendas').document().setData({
       'nombre': nuevaTienda.nombre,
       'tendero': tendero.email,
+      'descripcion' : nuevaTienda.descripcion,
       'imagen': nuevaTienda.imagen
     }).catchError((e) {
       print(e);
