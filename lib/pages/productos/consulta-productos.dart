@@ -5,7 +5,15 @@ import 'package:ruthapp/pages/productos/modificar-producto.dart';
 import 'package:ruthapp/pages/productos/producto.dart';
 import 'package:ruthapp/pages/productos/servicio-productos.dart';
 
-class ConsultaProductos extends StatelessWidget {
+class ConsultaProductos extends StatefulWidget {
+
+  @override
+  State<StatefulWidget> createState() {
+    return _ConsultaProductosState();
+  }
+}
+
+class _ConsultaProductosState extends State<ConsultaProductos> {
 
   ServicioProducto servicioProducto = new ServicioProducto();
 
