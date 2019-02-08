@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:ruthapp/pages/administracion-usuario.dart';
 import 'package:ruthapp/pages/login/servicio-autenticacion.dart';
 
 class MenuPrincipal extends StatelessWidget {
@@ -22,6 +23,7 @@ class MenuPrincipal extends StatelessWidget {
         _crearLink(context),
         _crearLink(context),
         Divider(),
+        _crearLinkAdministracionUsuario(context),
         _crearBotonCerrarSesion(context)
       ],
     ));
@@ -46,6 +48,17 @@ class MenuPrincipal extends StatelessWidget {
       onTap: () {
         Navigator.pop(context);
         // Navigator.push(context,  MaterialPageRoute(builder: (context) =>  FirstPage()));
+      },
+    );
+  }
+
+  ListTile _crearLinkAdministracionUsuario(BuildContext context) {
+    return ListTile(
+      title: Text('Editar Perfil'),
+      trailing: Icon(Icons.edit),
+      onTap: () {
+        Navigator.pop(context);
+        Navigator.push(context,  MaterialPageRoute(builder: (context) =>  AdministracionUsuario()));
       },
     );
   }
