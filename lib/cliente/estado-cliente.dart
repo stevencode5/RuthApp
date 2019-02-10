@@ -1,0 +1,1 @@
+enum EstadoCliente { pendiente, activo, inactivo }
