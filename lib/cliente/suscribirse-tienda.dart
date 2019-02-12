@@ -65,14 +65,8 @@ class _SuscribirseTiendaState extends State<SuscribirseTienda> {
       trailing: Icon(Icons.arrow_forward_ios),
       leading: Image(width: 70, image: AssetImage(tienda.imagen)),        
       onTap: () {
-        _mostrarInforTienda(tienda, context);
+        Navigator.push(context, MaterialPageRoute(builder: (context) => InfoTienda(tienda)));
       });
   }
-
-  void _mostrarInforTienda(Tienda tienda, BuildContext context) async {
-      final bool result = await Navigator.push(context, MaterialPageRoute(builder: (context) => InfoTienda(tienda)));
-      print('Se suscribio a la tienda $result');
-  }
-
 
 }
