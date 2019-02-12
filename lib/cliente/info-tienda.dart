@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ruthapp/administracion/tienda/servicio-tienda.dart';
 import 'package:ruthapp/administracion/tienda/tienda.dart';
 
 class InfoTienda extends StatefulWidget {
@@ -15,6 +16,8 @@ class InfoTienda extends StatefulWidget {
 
 class _InfoTiendaState extends State<InfoTienda> {
 
+  ServicioTienda servicioTienda = new ServicioTienda();
+
   Tienda _tiendaSeleccionada;
 
   @override
@@ -24,19 +27,42 @@ class _InfoTiendaState extends State<InfoTienda> {
         appBar: AppBar(
           title: Text('Información Tienda'),
         ),
-        body: Container(
-          padding: EdgeInsets.all(16.0),
-          child: ListView(
-            padding: EdgeInsets.symmetric(horizontal: 16.0),
-            children: <Widget>[
-              _crearLogo(),
-              _crearInfo(),
-              _crearBotonSuscribir()
-            ],
-          )         
-        )
+        body: _crearPanelInformacionTienda()
     );
   }
+
+  FutureBuilder _crearPanelInformacionTienda() {
+    return FutureBuilder<bool>(
+      future: servicioTienda.esClienteSuscritoATienda(this._tiendaSeleccionada),
+      builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+        switch (snapshot.connectionState) {          
+          case ConnectionState.done:
+            if(snapshot.data){
+              return _crearPanelYaSuscrito();
+            }else{
+              return _crearPanelSuscripcion();
+            }
+            break;
+          default:
+            return Text('Cargando ...');
+        }
+      },
+    );
+  }
+
+  Container _crearPanelSuscripcion(){
+    return Container(
+      padding: EdgeInsets.all(16.0),
+      child: ListView(
+        padding: EdgeInsets.symmetric(horizontal: 16.0),
+        children: <Widget>[
+          _crearImagenTienda(),
+          _crearInfo(),
+          _crearBotonSuscribir()
+        ],
+        )
+      );
+  }  
 
   Hero _crearLogo() {
     return Hero(
@@ -97,12 +123,44 @@ class _InfoTiendaState extends State<InfoTienda> {
           child: Text('Suscribirse !',
               style: TextStyle(fontSize: 20.0, color: Colors.white)),
           onPressed:(){
-            _mostrarConfirmacion(context);
+            _mostrarConfirmacion();
           } 
         ));
   }
 
-  void _mostrarConfirmacion(BuildContext context) {
+  Container _crearPanelYaSuscrito(){
+    return Container(
+      padding: EdgeInsets.all(16.0),
+      child: ListView(
+        padding: EdgeInsets.symmetric(horizontal: 16.0),
+        children: <Widget>[
+          _crearLogo(),
+          Center(
+            child: Text(
+              'Ya estas suscrito !',
+              style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold)
+            )
+          )
+        ],
+      )
+    );
+  }
+
+  Hero _crearImagenTienda() {
+    return Hero(
+      tag: 'hero',
+      child: Padding(
+        padding: EdgeInsets.fromLTRB(0.0, 70.0, 0.0, 30.0),
+        child: CircleAvatar(
+          backgroundColor: Colors.transparent,
+          radius: 70.0,
+          child: Image.asset(this._tiendaSeleccionada.imagen),
+        ),
+      ),
+    );
+  }
+
+  void _mostrarConfirmacion() {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -120,7 +178,7 @@ class _InfoTiendaState extends State<InfoTienda> {
               child: Text('Aceptar'),
               onPressed: () {
                 Navigator.of(context).pop();
-                _mostrarInfoSuscripcion(context);
+                _mostrarInfoSuscripcion();
               },
             )            
           ],
@@ -129,7 +187,7 @@ class _InfoTiendaState extends State<InfoTienda> {
     );
   }
 
-  void _mostrarInfoSuscripcion(BuildContext context) {
+  void _mostrarInfoSuscripcion() {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -152,6 +210,7 @@ class _InfoTiendaState extends State<InfoTienda> {
 
   void _suscribirUsuario(BuildContext context){
     print('Suscribiendo usuario');
+    servicioTienda.suscribirCliente(this._tiendaSeleccionada);
     Navigator.of(context).pop();
   }
 
