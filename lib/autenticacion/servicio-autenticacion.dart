@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:ruthapp/autenticacion/usuario.dart';
 
 class ServicioAutenticacion {
 
@@ -9,21 +10,35 @@ class ServicioAutenticacion {
   GoogleSignIn _googleSignIn = GoogleSignIn();
   FacebookLogin _facebookLogin = FacebookLogin();
 
-  Future<FirebaseUser> consultarUsuarioActual() {
+  Future<FirebaseUser> consultarUsuarioActual() async {
     print('Consultando usuario actual');
-    return _firebaseAuth.currentUser();
+    FirebaseUser usuario = await _firebaseAuth.currentUser();
+    print('Usuario actual nombre: ${usuario.displayName} correo: ${usuario.email} imagen : ${usuario.photoUrl}');
+    return usuario;
   }
 
-  Future<FirebaseUser> ingresar(String email, String password) {
-    print('Ingresar con FireAuth con $email y $password');
+  Future<FirebaseUser> ingresar(String correo, String password) {
+    print('Ingresar con FireAuth con $correo y $password');
     return _firebaseAuth.signInWithEmailAndPassword(
-        email: email, password: password);
+        email: correo, password: password);
   }
 
-  Future<FirebaseUser> crearCuenta(String email, String password) {
-    print('Crear cuenta con $email y $password');
-    return _firebaseAuth.createUserWithEmailAndPassword(
-        email: email, password: password);
+  Future<void> crearCuenta(Usuario usuario) async {    
+    print('Crear cuenta con nombre: ${usuario.nombre} correo: ${usuario.correo} contraseña: ${usuario.password} e imagen ${usuario.imagen}');
+    FirebaseUser usuarioRegistrado = await _firebaseAuth.createUserWithEmailAndPassword(email: usuario.correo, password: usuario.password);
+    actualizarInformacionUsuario(usuarioRegistrado, usuario);    
+  }
+
+  void actualizarInformacionUsuario(FirebaseUser usuarioRegistrado, Usuario usuario){
+    UserUpdateInfo info = armarInformacionUsuario(usuario);
+    usuarioRegistrado.updateProfile(info);
+  }
+
+  UserUpdateInfo armarInformacionUsuario(Usuario usuario){
+    UserUpdateInfo informacionUsuario = new UserUpdateInfo();
+    informacionUsuario.displayName = usuario.nombre;
+    informacionUsuario.photoUrl = usuario.imagen;    
+    return informacionUsuario;
   }
 
   Future<FirebaseUser> ingresarConGoogle() async {
@@ -56,9 +71,9 @@ class ServicioAutenticacion {
     return Future.error('No se pudo ingresar');
   }
 
-  Future<void> cerrarSesion() {
+  void cerrarSesion() async {
     print('Cerrar sesion');
-    return _firebaseAuth.signOut();
+    await _firebaseAuth.signOut();
   }
 
 }

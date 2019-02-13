@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ruthapp/autenticacion/servicio-autenticacion.dart';
+import 'package:ruthapp/autenticacion/usuario.dart';
 
 class CrearCuenta extends StatefulWidget {
   @override
@@ -7,8 +8,12 @@ class CrearCuenta extends StatefulWidget {
 }
 
 class _CrearCuentaState extends State<CrearCuenta> {
-  String _email;
+  
+  String _nombre;
+  String _correo;
   String _password;
+  String _imagen;
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   ServicioAutenticacion servicioAutenticacion = new ServicioAutenticacion();
@@ -31,9 +36,11 @@ class _CrearCuentaState extends State<CrearCuenta> {
           padding: EdgeInsets.symmetric(horizontal: 16.0),
           children: <Widget>[
             _crearLogo(),
+            _crearTextFieldNombre(),
             _crearTextFieldEmail(),
             _crearTextFieldPassword(),
-            _crearBotonRegistrarCuenta(),
+            _crearTextFieldImagen(),
+            _crearBotonRegistrarCuenta()            
           ],
         ),
       ),
@@ -54,6 +61,18 @@ class _CrearCuentaState extends State<CrearCuenta> {
     );
   }
 
+  TextFormField _crearTextFieldNombre() {
+    return TextFormField(
+      maxLines: 1,
+      keyboardType: TextInputType.text,
+      autofocus: false,
+      decoration: InputDecoration(hintText: 'Nombre', icon: Icon(Icons.perm_contact_calendar)),
+      validator: (value) =>
+          value.isEmpty ? 'El nombre no puede estar vacio' : null,
+      onSaved: (value) => this._nombre = value,
+    );
+  }
+
   TextFormField _crearTextFieldEmail() {
     return TextFormField(
       maxLines: 1,
@@ -62,7 +81,7 @@ class _CrearCuentaState extends State<CrearCuenta> {
       decoration: InputDecoration(hintText: 'Email', icon: Icon(Icons.mail)),
       validator: (value) =>
           value.isEmpty ? 'El correo no puede estar vacio' : null,
-      onSaved: (value) => this._email = value,
+      onSaved: (value) => this._correo = value,
     );
   }
 
@@ -76,6 +95,18 @@ class _CrearCuentaState extends State<CrearCuenta> {
       validator: (value) =>
           value.isEmpty ? 'La contraseña no puede estar vacia' : null,
       onSaved: (value) => this._password = value,
+    );
+  }
+
+  TextFormField _crearTextFieldImagen() {
+    return TextFormField(
+      maxLines: 1,
+      keyboardType: TextInputType.url,
+      autofocus: false,
+      decoration: InputDecoration(hintText: 'Imagen', icon: Icon(Icons.image)),
+      validator: (value) =>
+          value.isEmpty ? 'La imagen no puede estar vacia' : null,
+      onSaved: (value) => this._imagen = value,
     );
   }
 
@@ -98,20 +129,28 @@ class _CrearCuentaState extends State<CrearCuenta> {
     final _formState = _formKey.currentState;
     if (_formState.validate()) {
       _formState.save();
-      servicioAutenticacion.crearCuenta(this._email, this._password)
-        .then((usuario) => Navigator.of(context).pushReplacementNamed('/general/home-inicio'))
-        .catchError((error) => _mostrarMensajeError(error.code, context));
+      Usuario nuevoUsuario = new Usuario(this._nombre, this._correo, this._password, this._imagen);      
+      servicioAutenticacion.crearCuenta(nuevoUsuario)
+        .then((usuario){
+          Navigator.of(context).pushReplacementNamed('/general/home-inicio');
+        })
+        .catchError((error){
+          _mostrarMensajeError(error.code, context);
+        });    
     }
   } 
 
   void _mostrarMensajeError(String codigoError, BuildContext context){
     switch(codigoError){
       case 'ERROR_INVALID_EMAIL': _mostrarMensajeAlerta('El correo no tiene formato valido', context); 
-      break;
+        break;
       case 'ERROR_WEAK_PASSWORD': _mostrarMensajeAlerta('La contraseña es muy debil, debe de tener al menos 6 caracteres', context); 
-      break;
+        break;
       case 'ERROR_EMAIL_ALREADY_IN_USE': _mostrarMensajeAlerta('El correo ya esta siendo usado', context); 
-      break;
+        break;
+      default:
+        print(codigoError);
+        _mostrarMensajeAlerta('Se presento un error', context); 
     }
   }
 
