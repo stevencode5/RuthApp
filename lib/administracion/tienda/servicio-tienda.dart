@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:ruthapp/administracion/tienda/tienda.dart';
 import 'package:ruthapp/autenticacion/servicio-autenticacion.dart';
+import 'package:ruthapp/cliente/cliente.dart';
 
 class ServicioTienda {
 
@@ -31,6 +32,16 @@ class ServicioTienda {
       .catchError((e){
         print(e);
       });
+  }
+
+  void cambiarEstadoCliente(Cliente cliente, String estado, Tienda tienda){
+    Firestore.instance
+      .collection('tiendas').document(tienda.id)
+      .collection('clientes').document(cliente.id)
+      .updateData({'estado': estado})
+      .catchError((e){
+        print(e);
+      });        
   }
 
   Future<bool> esClienteSuscritoATienda(Tienda tienda) async {
