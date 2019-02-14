@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:ruthapp/administracion/tienda/tienda.dart';
 import 'package:ruthapp/autenticacion/servicio-autenticacion.dart';
-import 'package:ruthapp/cliente/estado-cliente.dart';
 
 class ServicioTienda {
 
@@ -27,7 +26,7 @@ class ServicioTienda {
     Firestore.instance
       .collection('tiendas').document(tienda.id)
       .updateData({
-          'clientes.$id': EstadoCliente.pendiente.toString(),
+          'clientes.$id': 'Pendiente',
         })
       .catchError((e){
         print(e);
