@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:ruthapp/administracion/tienda/servicio-tienda.dart';
 import 'package:ruthapp/cliente/cliente.dart';
 
-class ClientesPendientes extends StatefulWidget {
+class ClientesInactivos extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return _ClientesPendientesState();
+    return _ClientesInactivosState();
   }
 }
 
-class _ClientesPendientesState extends State<ClientesPendientes> {
+class _ClientesInactivosState extends State<ClientesInactivos> {
 
   ServicioTienda servicioTienda = new ServicioTienda();
 
@@ -29,7 +29,7 @@ class _ClientesPendientesState extends State<ClientesPendientes> {
     return StreamBuilder<QuerySnapshot>(
       stream: Firestore.instance.collection('tiendas')
         .document('-LYDnJ22RH-ISqVqfKir').collection('clientes')
-        .where('estado', isEqualTo: 'Pendiente')
+        .where('estado', isEqualTo: 'Inactivo')
         .snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) return Text('Error: ${snapshot.error}');

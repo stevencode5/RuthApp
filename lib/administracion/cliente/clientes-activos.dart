@@ -1,17 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:ruthapp/administracion/productos/producto.dart';
 import 'package:ruthapp/administracion/tienda/servicio-tienda.dart';
+import 'package:ruthapp/cliente/cliente.dart';
 
-class ClientesHabilitados extends StatefulWidget {
+class ClientesActivos extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return _ClientesHabilitadosState();
+    return _ClientesActivosState();
   }
 }
 
-class _ClientesHabilitadosState extends State<ClientesHabilitados> {
+class _ClientesActivosState extends State<ClientesActivos> {
 
   ServicioTienda servicioTienda = new ServicioTienda();
 
@@ -25,11 +25,11 @@ class _ClientesHabilitadosState extends State<ClientesHabilitados> {
   }
 
   Widget _crearListaClientes(BuildContext context) {
-    print('Creando lista producto');
+    print('Creando lista clientes');
     return StreamBuilder<QuerySnapshot>(
       stream: Firestore.instance.collection('tiendas')
         .document('-LYDnJ22RH-ISqVqfKir').collection('clientes')
-        .where('estado', isEqualTo: 'Pendiente')
+        .where('estado', isEqualTo: 'Activo')
         .snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) return Text('Error: ${snapshot.error}');
@@ -40,7 +40,7 @@ class _ClientesHabilitadosState extends State<ClientesHabilitados> {
             return ListView(
               children:
                   snapshot.data.documents.map((DocumentSnapshot document) {
-                return _crearListTile(Producto.fromSnapshot(document), context);
+                return _crearListTile(Cliente.fromSnapshot(document), context);
               }).toList(),
             );
         }
@@ -58,14 +58,12 @@ class _ClientesHabilitadosState extends State<ClientesHabilitados> {
     ));
   }
 
-  ListTile _crearListTile(Producto producto, BuildContext context) {
+  ListTile _crearListTile(Cliente cliente, BuildContext context) {
     return ListTile(
-        subtitle: Text(
-          'Cantidad: ${producto.cantidad.toString()} \n\$${producto.precio}',
-          style: TextStyle(fontSize: 13)),       
-        leading: Image(width: 70, image: AssetImage(producto.imagen)),
-        title: Text(producto.nombre)
-        );
+      title: Text(cliente.nombre),
+      leading: Image(width: 70, image: AssetImage(cliente.imagen)),
+      subtitle: Text(cliente.correo),        
+    );
   }
 
 }

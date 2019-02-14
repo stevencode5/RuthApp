@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:ruthapp/administracion/cliente/clientes-habilitados.dart';
-import 'package:ruthapp/administracion/cliente/clientes-inhabilitados.dart';
+import 'package:ruthapp/administracion/cliente/clientes-activos.dart';
+import 'package:ruthapp/administracion/cliente/clientes-inactivos.dart';
 import 'package:ruthapp/administracion/cliente/clientes-pendientes.dart';
 
 class AdministrarClientes extends StatefulWidget {
@@ -14,8 +14,8 @@ class _AdministrarClientesState extends State<AdministrarClientes> {
   int _currentIndex = 0;
   final List<Widget> _children = [
     ClientesPendientes(),
-    ClientesHabilitados(),
-    ClientesInhabilitados()
+    ClientesActivos(),
+    ClientesInactivos()
   ];
 
   @override
@@ -35,11 +35,11 @@ class _AdministrarClientesState extends State<AdministrarClientes> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.check),
-            title: Text('Habilitados'),
+            title: Text('Activos'),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.close),
-            title: Text('Inhabilitados')
+            title: Text('Inactivos')
           )
         ],
       ),
