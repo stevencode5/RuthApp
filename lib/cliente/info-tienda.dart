@@ -1,6 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ruthapp/administracion/tienda/servicio-tienda.dart';
 import 'package:ruthapp/administracion/tienda/tienda.dart';
+import 'package:ruthapp/autenticacion/servicio-autenticacion.dart';
+import 'package:ruthapp/cliente/cliente.dart';
 
 class InfoTienda extends StatefulWidget {
 
@@ -16,9 +20,13 @@ class InfoTienda extends StatefulWidget {
 
 class _InfoTiendaState extends State<InfoTienda> {
 
+  ServicioAutenticacion servicioAutenticacion = new ServicioAutenticacion();
+
   ServicioTienda servicioTienda = new ServicioTienda();
 
   Tienda _tiendaSeleccionada;
+
+  Cliente _clienteActual;
 
   @override
   Widget build(BuildContext context) {
@@ -32,21 +40,29 @@ class _InfoTiendaState extends State<InfoTienda> {
   }
 
   FutureBuilder _crearPanelInformacionTienda() {
-    return FutureBuilder<bool>(
-      future: servicioTienda.esClienteSuscritoATienda(this._tiendaSeleccionada),
-      builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+    return FutureBuilder<DocumentSnapshot>(
+      future: _cargarCliente(),
+      builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
         switch (snapshot.connectionState) {          
           case ConnectionState.done:
-            if(snapshot.data){
+            if(snapshot.data.exists){
               return _crearPanelYaSuscrito();
             }else{
               return _crearPanelSuscripcion();
             }
             break;
           default:
-            return Text('Cargando ...');
+            return _crearPanelCargando();
         }
-      },
+      }
+    );
+  }
+
+  Container _crearPanelCargando(){
+    return Container(
+      child: Center(
+        child: Text('Cargando ...'),
+      ),
     );
   }
 
@@ -136,10 +152,19 @@ class _InfoTiendaState extends State<InfoTienda> {
         children: <Widget>[
           _crearLogo(),
           Center(
-            child: Text(
-              'Ya estas suscrito !',
-              style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold)
-            )
+            child: Column(
+              children: <Widget>[
+                Text(
+                  '${this._tiendaSeleccionada.nombre}',
+                  style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+                ),
+                Divider(),
+                Text(
+                  'Ya estas suscrito !',
+                  style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+                )
+              ],
+            ),            
           )
         ],
       )
@@ -208,9 +233,15 @@ class _InfoTiendaState extends State<InfoTienda> {
     );
   }
 
+  Future<DocumentSnapshot> _cargarCliente() async {    
+    FirebaseUser usuario = await servicioAutenticacion.consultarUsuarioActual();
+    this._clienteActual = Cliente.fromUsuario(usuario);
+    return servicioTienda.consultarClientePorTienda(this._clienteActual, this._tiendaSeleccionada);
+  }
+
   void _suscribirUsuario(BuildContext context){
     print('Suscribiendo usuario');
-    servicioTienda.suscribirCliente(this._tiendaSeleccionada);
+    servicioTienda.suscribirCliente(this._clienteActual, this._tiendaSeleccionada);
     Navigator.of(context).pop();
   }
 

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Cliente {
   String id;
@@ -22,6 +23,12 @@ class Cliente {
         this.nombre = snapshot['nombre'],
         this.correo = snapshot['correo'],
         this.imagen = snapshot['imagen'],
-        this.estado = (snapshot['estado']);
+        this.estado = snapshot['estado'];
+
+  Cliente.fromUsuario(FirebaseUser usuario)
+      : this.id = usuario.email,
+        this.nombre = usuario.displayName,
+        this.correo = usuario.email,
+        this.imagen = usuario.photoUrl;        
 
 }

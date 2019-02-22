@@ -21,14 +21,15 @@ class ServicioTienda {
     });
   }
 
-  void suscribirCliente(Tienda tienda) async {
-    FirebaseUser cliente = await servicioAutenticacion.consultarUsuarioActual();
-    String id = calcularIdCliente(cliente);       
-    Firestore.instance
-      .collection('tiendas').document(tienda.id)
-      .updateData({
-          'clientes.$id': 'Pendiente',
-        })
+  void suscribirCliente(Cliente nuevoCliente, Tienda tienda) async {
+    print('Suscribiendo cliente ${nuevoCliente.nombre} para la tienda ${tienda.nombre}');
+    Firestore.instance.collection('tiendas').document(tienda.id)
+      .collection('clientes').document(nuevoCliente.id).setData({
+        'nombre': nuevoCliente.nombre,
+        'correo': nuevoCliente.correo,
+        'estado': 'Pendiente',
+        'imagen': nuevoCliente.imagen
+      })
       .catchError((e){
         print(e);
       });
@@ -44,16 +45,12 @@ class ServicioTienda {
       });        
   }
 
-  Future<bool> esClienteSuscritoATienda(Tienda tienda) async {
-    FirebaseUser cliente = await servicioAutenticacion.consultarUsuarioActual();
-    String id = calcularIdCliente(cliente);
-    bool existe = tienda.clientes.containsKey(id);
-    print('El cliente ${cliente.email} $existe existe en la tienda ${tienda.nombre}');
-    return Future.value(existe);
-  }
-
-  String calcularIdCliente(FirebaseUser cliente){
-    return cliente.email.replaceAll('.', ''); 
+  Future<DocumentSnapshot> consultarClientePorTienda(Cliente cliente, Tienda tienda) {
+    print('Consultando si el Cliente ${cliente.nombre} esta suscrito en la Tienda ${tienda.nombre}');
+    return Firestore.instance
+      .collection('tiendas').document(tienda.id)
+      .collection('clientes').document(cliente.id)
+      .get();
   }
 
 }
