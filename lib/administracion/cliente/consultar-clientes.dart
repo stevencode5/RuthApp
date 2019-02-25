@@ -25,6 +25,7 @@ class _ConsultarClientesState extends State<ConsultarClientes> {
   @override
   Widget build(BuildContext context) {
     this._estado = widget.estado;
+    print('Consultar clientes por estado : ${this._estado}');
     return Scaffold(      
       body: Stack(children: <Widget>[
         _crearListaClientes(context)
@@ -36,7 +37,7 @@ class _ConsultarClientesState extends State<ConsultarClientes> {
     print('Creando lista clientes');
     return StreamBuilder<QuerySnapshot>(
       stream: Firestore.instance.collection('tiendas')
-        .document('-LYDnJ22RH-ISqVqfKir').collection('clientes')
+        .document('-LYDnJ22RH-ISqVqfKir').collection('clientes') // TODO Cambio de id por el de la tienda registrada por el usuario
         .where('estado', isEqualTo: this._estado)
         .snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -69,7 +70,11 @@ class _ConsultarClientesState extends State<ConsultarClientes> {
   ListTile _crearListTile(Cliente cliente, BuildContext context) {
     return ListTile(
       title: Text(cliente.nombre),
-      leading: Image(width: 70, image: AssetImage(cliente.imagen)),
+      leading: CircleAvatar(
+        radius: 30.0,
+        backgroundImage: NetworkImage(cliente.imagen),
+        backgroundColor: Colors.transparent
+      ),
       subtitle: Text(cliente.correo),   
       onTap: () {
         if(this._estado == 'Pendiente'){

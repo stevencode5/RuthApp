@@ -47,11 +47,7 @@ class _AprobarClienteState extends State<AprobarCliente> {
       tag: 'hero',
       child: Padding(
         padding: EdgeInsets.fromLTRB(0.0, 70.0, 0.0, 30.0),
-        child: CircleAvatar(
-          backgroundColor: Colors.transparent,
-          radius: 70.0,
-          child: Image.asset(this._clienteSeleccionado.imagen),
-        ),
+        child: Image(height: 160, image: NetworkImage(this._clienteSeleccionado.imagen))
       ),
     );
   }
@@ -156,7 +152,7 @@ class _AprobarClienteState extends State<AprobarCliente> {
 
   void _suscribirCliente(c){
     print('Suscribiendo cliente');
-    servicioTienda.cambiarEstadoCliente(this._clienteSeleccionado, 'Activo', Tienda()); // Todo ponder tienda 
+    servicioTienda.cambiarEstadoCliente(this._clienteSeleccionado, 'Activo', Tienda.fromId('-LYDnJ22RH-ISqVqfKir')); // Todo ponder tienda 
     Navigator.of(context).pop();
   }
 

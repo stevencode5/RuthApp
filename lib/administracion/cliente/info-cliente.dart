@@ -37,6 +37,7 @@ class _InfoClienteState extends State<InfoCliente> {
               _crearImagenCliente(),
               _crearInfo(),
               _crearBotonCuenta(),
+              Divider(),
               _crearBotonEliminar()
             ],
             )
@@ -49,11 +50,7 @@ class _InfoClienteState extends State<InfoCliente> {
       tag: 'hero',
       child: Padding(
         padding: EdgeInsets.fromLTRB(0.0, 70.0, 0.0, 30.0),
-        child: CircleAvatar(
-          backgroundColor: Colors.transparent,
-          radius: 70.0,
-          child: Image.asset(this._clienteSeleccionado.imagen),
-        ),
+        child: Image(height: 160, image: NetworkImage(this._clienteSeleccionado.imagen))
       ),
     );
   }
@@ -110,7 +107,6 @@ class _InfoClienteState extends State<InfoCliente> {
 
   Container _crearBotonEliminar() {
     return Container(
-        padding: EdgeInsets.only(top: 35),
         child: RaisedButton(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
@@ -174,7 +170,7 @@ class _InfoClienteState extends State<InfoCliente> {
 
   void _eliminarCliente(){
     print('Eliminando cliente');
-    servicioTienda.cambiarEstadoCliente(this._clienteSeleccionado, 'Activo', Tienda()); // Todo ponder tienda     
+    servicioTienda.cambiarEstadoCliente(this._clienteSeleccionado, 'Inactivo', Tienda.fromId('-LYDnJ22RH-ISqVqfKir')); // Todo ponder tienda     
   }
 
 
