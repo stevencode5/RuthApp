@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ruthapp/administracion/administracion-tienda.dart';
+import 'package:ruthapp/administracion/cliente/administrar-clientes.dart';
 import 'package:ruthapp/administracion/productos/consulta-productos.dart';
 import 'package:ruthapp/administracion/productos/crear-producto.dart';
 import 'package:ruthapp/administracion/tienda/crear-tienda.dart';
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
         routes: <String, WidgetBuilder> {
           '/administracion/productos/consulta-producto' : (BuildContext context) => ConsultaProductos(),
           '/administracion/productos/crear-producto' : (BuildContext context) => CrearProducto(),
+          '/administracion/cliente/administrar-clientes' : (BuildContext context) => AdministrarClientes(),
           '/administracion/tienda/crear-tienda' : (BuildContext context) => CrearTienda(),
           '/administracion/administracion-tienda' : (BuildContext context) => AdministracionTienda(),
           '/autenticacion/crear-cuenta' : (BuildContext context) => CrearCuenta(),

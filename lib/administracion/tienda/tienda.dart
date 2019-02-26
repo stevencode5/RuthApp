@@ -9,6 +9,10 @@ class Tienda {
 
   Tienda();
 
+  Tienda.fromId(String id){
+    this.id = id;
+  }
+
   Tienda.fromDatos(String id, String nombre, String tendero, String descripcion, String imagen) {
     this.id = id;
     this.nombre = nombre;
@@ -23,4 +27,5 @@ class Tienda {
         this.tendero = snapshot['tendero'],
         this.descripcion = snapshot['descripcion'],
         this.imagen = snapshot['imagen'];
+
 }
