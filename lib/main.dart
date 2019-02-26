@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         title: 'RuthApp',
-        home: Login(),
+        home: HomeInicio(),
         routes: <String, WidgetBuilder> {
           '/administracion/productos/consulta-producto' : (BuildContext context) => ConsultaProductos(),
           '/administracion/productos/crear-producto' : (BuildContext context) => CrearProducto(),
