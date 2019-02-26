@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:ruthapp/administracion/cliente/cuenta-cliente.dart';
 import 'package:ruthapp/administracion/cliente/info-cliente.dart';
 import 'package:ruthapp/administracion/tienda/servicio-tienda.dart';
 import 'package:ruthapp/administracion/tienda/tienda.dart';
 import 'package:ruthapp/cliente/cliente.dart';
 
-class AprobarCliente extends StatefulWidget {
+class ActivarClente extends StatefulWidget {
 
   final Cliente cliente;
 
-  AprobarCliente(@required this.cliente);
+  ActivarClente(@required this.cliente);
 
   @override
   State<StatefulWidget> createState() {
-    return _AprobarClienteState();
+    return _ActivarClenteState();
   }
 }
 
-class _AprobarClienteState extends State<AprobarCliente> {
+class _ActivarClenteState extends State<ActivarClente> {
 
   ServicioTienda servicioTienda = new ServicioTienda();
 
@@ -27,7 +28,7 @@ class _AprobarClienteState extends State<AprobarCliente> {
     this._clienteSeleccionado = widget.cliente;
     return Scaffold(
         appBar: AppBar(
-          title: Text('Aprobar Cliente'),
+          title: Text('Información Cliente'),
         ),
         body: Container(
           padding: EdgeInsets.all(16.0),
@@ -36,7 +37,7 @@ class _AprobarClienteState extends State<AprobarCliente> {
             children: <Widget>[
               InfoCliente(this._clienteSeleccionado),
               Divider(),
-              _crearBotonAprobar()
+              _crearBotonActivar()
             ],
             )
         )
@@ -44,26 +45,42 @@ class _AprobarClienteState extends State<AprobarCliente> {
   }     
 
 
-  Container _crearBotonAprobar() {
+  Container _crearBotonCuenta() {
     return Container(
+        padding: EdgeInsets.only(top: 35),
         child: RaisedButton(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
           color: Colors.blue,
-          child: Text('Aprobar !',
+          child: Text('Cuenta !',
               style: TextStyle(fontSize: 20.0, color: Colors.white)),
           onPressed:(){
-            _mostrarConfirmacion();
+            Navigator.push(context, MaterialPageRoute(builder: (context) => CuentaCliente(this._clienteSeleccionado, Tienda()))); 
           } 
         ));
   }
 
-  void _mostrarConfirmacion() {
+  Container _crearBotonActivar() {
+    return Container(
+        child: RaisedButton(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+          color: Colors.blue,
+          child: Text('Activar !',
+              style: TextStyle(fontSize: 20.0, color: Colors.white)),
+          onPressed:(){
+            _mostrarConfirmacionEliminar();
+          } 
+        ));
+  }
+
+  void _mostrarConfirmacionEliminar() {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('Confirmacion'),
-          content: Text('¿Esta seguro de suscribir este cliente?'),
+          content: Text('¿Esta seguro de activar este cliente?'),
           actions: <Widget>[
             FlatButton(
               child: Text('Cancelar'),
@@ -75,8 +92,8 @@ class _AprobarClienteState extends State<AprobarCliente> {
               child: Text('Aceptar'),
               onPressed: () {
                 Navigator.of(context).pop();
-                _suscribirCliente(_suscribirCliente);
-                _mostrarInfoSuscripcion();
+                _eliminarCliente();
+                _mostrarMensajeExitoso();
               },
             )            
           ],
@@ -85,30 +102,31 @@ class _AprobarClienteState extends State<AprobarCliente> {
     );
   }
 
-  void _mostrarInfoSuscripcion() {
+  void _mostrarMensajeExitoso() {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Suscripcion existosa'),
-          content: Text('Tienes un nuevo cliente en tu tienda.'),          
+          title: Text('Activacion exitosa'),
+          content: Text('El cliente ha sido activado.'),          
           actions: <Widget>[
             FlatButton(
               child: Text('Aceptar'),
               onPressed: () {
                 Navigator.of(context).pop();
+                Navigator.of(context).pop();
               },
             )            
-          ]
+          ],
         );
       },
     );
   }
 
-  void _suscribirCliente(c){
-    print('Suscribiendo cliente');
-    servicioTienda.cambiarEstadoCliente(this._clienteSeleccionado, 'Activo', Tienda.fromId('-LYDnJ22RH-ISqVqfKir')); // Todo ponder tienda 
-    Navigator.of(context).pop();
+  void _eliminarCliente(){
+    print('Eliminando cliente');
+    servicioTienda.cambiarEstadoCliente(this._clienteSeleccionado, 'Activo', Tienda.fromId('-LYDnJ22RH-ISqVqfKir')); // Todo ponder tienda     
   }
+
 
 }
