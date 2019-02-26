@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:ruthapp/administracion/cliente/activar-cliente.dart';
 import 'package:ruthapp/administracion/cliente/aprobar-cliente.dart';
-import 'package:ruthapp/administracion/cliente/info-cliente.dart';
+import 'package:ruthapp/administracion/cliente/detalle-cliente.dart';
 import 'package:ruthapp/administracion/tienda/servicio-tienda.dart';
 import 'package:ruthapp/cliente/cliente.dart';
 
@@ -77,11 +78,17 @@ class _ConsultarClientesState extends State<ConsultarClientes> {
       ),
       subtitle: Text(cliente.correo),   
       onTap: () {
-        if(this._estado == 'Pendiente'){
-          Navigator.push(context, MaterialPageRoute(builder: (context) => AprobarCliente(cliente))); 
-        } else{
-          Navigator.push(context, MaterialPageRoute(builder: (context) => InfoCliente(cliente)));
-        }        
+        switch (this._estado) {
+          case 'Pendiente':       
+            Navigator.push(context, MaterialPageRoute(builder: (context) => AprobarCliente(cliente)));     
+            break;
+          case 'Activo':
+            Navigator.push(context, MaterialPageRoute(builder: (context) => DetalleCliente(cliente)));            
+            break;
+          case 'Inactivo':                        
+            Navigator.push(context, MaterialPageRoute(builder: (context) => ActivarClente(cliente)));
+            break;
+        }              
       }     
     );
   }
