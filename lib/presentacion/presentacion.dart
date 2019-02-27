@@ -17,7 +17,7 @@ class _PresentacionState extends State<Presentacion> {
     Page3(),
   ];
   int page = 0;
-  Container _Empezar() {
+  Container _empezar() {
     return Container(
         padding: EdgeInsets.only(top: 35),
         child: RaisedButton(
@@ -41,13 +41,13 @@ class _PresentacionState extends State<Presentacion> {
   @override
   Widget build(BuildContext context) {
     bool isDone = page == _pages.length - 1;
-    return new Scaffold(
+    return Scaffold(
         backgroundColor: Colors.transparent,
-        body: new Stack(
+        body: Stack(
           children: <Widget>[
-            new Positioned.fill(
-              child: new PageView.builder(
-                physics: new AlwaysScrollableScrollPhysics(),
+            Positioned.fill(
+              child: PageView.builder(
+                physics: AlwaysScrollableScrollPhysics(),
                 controller: _controller,
                 itemCount: _pages.length,
                 itemBuilder: (BuildContext context, int index) {
@@ -60,11 +60,11 @@ class _PresentacionState extends State<Presentacion> {
                 },
               ),
             ),
-            new Positioned(
+            Positioned(
               top: 0.0,
               left: 0.0,
               right: 0.0,
-              child: new SafeArea(
+              child: SafeArea(
                 child: AppBar(
                   backgroundColor: Colors.transparent,
                   elevation: 0.0,
@@ -90,16 +90,16 @@ class _PresentacionState extends State<Presentacion> {
                 ),
               ),
             ),
-            new Positioned(
+            Positioned(
               bottom: 10.0,
               left: 0.0,
               right: 0.0,
-              child: new SafeArea(
-                child: new Column(
+              child: SafeArea(
+                child: Column(
                   children: <Widget>[
-                    new Padding(
+                    Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: new DotsIndicator(
+                      child: DotsIndicator(
                         controller: _controller,
                         itemCount: _pages.length,
                         onPageSelected: (int page) {
@@ -111,86 +111,10 @@ class _PresentacionState extends State<Presentacion> {
                         },
                       ),
                     ),
-                    new Opacity(
+                    Opacity(
                       opacity: isDone ? 1 : 0,
-                      child: _Empezar(),
-                      /*child: Container(
-                        width: 150.0,
-                        height: 50.0,
-                        child: new Material(
-                          child: MaterialButton(
-                            child: Text(
-                              'Empieza',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .button
-                                  .copyWith(color: Colors.white),
-                            ),
-                            onPressed: () {
-                              Navigator.pushReplacementNamed(context,
-                                  '/administracion/administracion-tienda');
-                            },
-                            //highlightColor: Colors.orange.withOpacity(0.5),
-                            //splashColor: Colors.orange.withOpacity(0.5),
-                          ),
-                          color: Colors.transparent,
-                          borderRadius: new BorderRadius.circular(30.0),
-                        ),
-                      ),*/
+                      child: _empezar(),
                     ),
-                    /*Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      new Container(
-                        width: 150.0,
-                        height: 50.0,
-                        decoration: BoxDecoration(
-                          gradient: new LinearGradient(
-                            colors: [
-                              Colors.orange[600],
-                              Colors.orange[900],
-                            ],
-                            begin: Alignment(0.5, -1.0),
-                            end: Alignment(0.5, 1.0)
-                          ),
-                          borderRadius: new BorderRadius.circular(30.0),
-                        ),
-                        child: new Material(
-                          child: MaterialButton(
-                            child: Text('Registro',
-                              style: Theme.of(context).textTheme.button.copyWith(color: Colors.white),
-                            ),
-                            onPressed: (){},
-                            highlightColor: Colors.orange.withOpacity(0.5),
-                            splashColor: Colors.orange.withOpacity(0.5),
-                          ),
-                          color: Colors.transparent,
-                          borderRadius: new BorderRadius.circular(30.0),
-                        ),
-                      ),
-                      new Container(
-                        width: 150.0,
-                        height: 50.0,
-                        decoration: BoxDecoration(
-                          borderRadius: new BorderRadius.circular(30.0),
-                          border: Border.all(color: Colors.white, width: 1.0),
-                          color: Colors.transparent,
-                        ),
-                        child: new Material(
-                          child: MaterialButton(
-                            child: Text('LOG IN',
-                              style: Theme.of(context).textTheme.button.copyWith(color: Colors.white),
-                            ),
-                            onPressed: (){},
-                            highlightColor: Colors.white30,
-                            splashColor: Colors.white30,
-                          ),
-                          color: Colors.transparent,
-                          borderRadius: new BorderRadius.circular(30.0),
-                        ),
-                      ),
-                    ],
-                  ),*/
                   ],
                 ),
               ),

@@ -1,31 +1,20 @@
 import 'package:flutter/material.dart';
 //import 'package:ruthapp/presentacion/efectos.dart';
 
-
 class Page2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new Container(
+    return Container(
       height: double.infinity,
       width: double.infinity,
-      decoration: new BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            Colors.grey[300],
-            Colors.deepPurple[900],
-          ],
-          begin: Alignment(0.5, -1.0),
-          end: Alignment(0.5, 1.0)
-        )
-      ),
+      decoration: BoxDecoration(
+          gradient: LinearGradient(colors: [
+        Colors.grey[300],
+        Colors.deepPurple[900],
+      ], begin: Alignment(0.5, -1.0), end: Alignment(0.5, 1.0))),
       child: Stack(
         children: <Widget>[
-          /*new Positioned(
-            child: new CircleWithImage('assets/imgs/LogoFlutter.png'),
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-          ),*/
-          new Positioned.fill(
+          Positioned.fill(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
@@ -34,18 +23,24 @@ class Page2 extends StatelessWidget {
                     image: AssetImage('assets/imgs/LogoFlutter.png'),
                     fit: BoxFit.fitHeight,
                   ),
-                  height: 250.0,
-                  width: 250.0,
                 ),
-                new Padding(
+                Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text('Compra los mejores productos',
-                    style: Theme.of(context).textTheme.display2.copyWith(color: Colors.white),
+                  child: Text(
+                    'Compra los mejores productos',
+                    style: Theme.of(context)
+                        .textTheme
+                        .display2
+                        .copyWith(color: Colors.white),
                     textAlign: TextAlign.center,
                   ),
                 ),
-                Text('Al mejor tendero...',
-                  style: Theme.of(context).textTheme.display1.copyWith(color: Colors.white),
+                Text(
+                  'Al mejor tendero...',
+                  style: Theme.of(context)
+                      .textTheme
+                      .display1
+                      .copyWith(color: Colors.white),
                   textAlign: TextAlign.center,
                 )
               ],
