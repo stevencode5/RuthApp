@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 
 class PantallaPresentacion extends StatelessWidget {
-
   final String _textoPrincipal;
   final String _textoSecundario;
   final String _urlImagen;
 
   PantallaPresentacion(@required this._textoPrincipal, @required this._textoSecundario, @required this._urlImagen);
-  
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -24,37 +23,44 @@ class PantallaPresentacion extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                SizedBox(
-                  child: Image(
-                    image: AssetImage(this._urlImagen),
-                    fit: BoxFit.fitHeight,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    this._textoPrincipal,
-                    style: Theme.of(context)
-                        .textTheme
-                        .display2
-                        .copyWith(color: Colors.white),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-                Text(
-                  this._textoSecundario,
-                  style: Theme.of(context)
-                      .textTheme
-                      .display1
-                      .copyWith(color: Colors.white),
-                  textAlign: TextAlign.center,
-                )
+                _crearImagenPresentacion(),
+                _crearTextoPrincipal(context),
+                _crearTextoSecundario(context)
               ],
             ),
           )
         ],
         alignment: FractionalOffset.center,
       ),
+    );
+  }
+
+  SizedBox _crearImagenPresentacion() {
+    return SizedBox(
+      child: Image(
+        image: AssetImage(this._urlImagen),
+        fit: BoxFit.fitHeight,
+      ),
+    );
+  }
+
+  Padding _crearTextoPrincipal(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Text(
+        this._textoPrincipal,
+        style:
+            Theme.of(context).textTheme.display2.copyWith(color: Colors.white),
+        textAlign: TextAlign.center,
+      ),
+    );
+  }
+
+  Text _crearTextoSecundario(BuildContext context) {
+    return Text(
+      this._textoSecundario,
+      style: Theme.of(context).textTheme.display1.copyWith(color: Colors.white),
+      textAlign: TextAlign.center,
     );
   }
 }
