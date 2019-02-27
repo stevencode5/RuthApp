@@ -111,7 +111,7 @@ class _CrearProductoState extends State<CrearProducto> {
           return FloatingActionButton(
             tooltip: 'Crear Producto',
             onPressed: () {
-              _crearProducto(context);
+              _cargarImagen(context);
             },
             child: Icon(Icons.save),
           );
@@ -124,4 +124,9 @@ class _CrearProductoState extends State<CrearProducto> {
     this.servicioProducto.crearProducto(this._nuevoProducto);
     Navigator.pop(context, true); 
   }
+
+  void _cargarImagen(BuildContext context){
+        
+  }
+
 }
