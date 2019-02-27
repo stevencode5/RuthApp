@@ -159,7 +159,7 @@ class _LoginState extends State<Login> {
       _formState.save();
       servicioAutenticacion
           .ingresar(this._email, this._password)
-          .then((usuario) => Navigator.of(context).pushReplacementNamed('/administracion/administracion-tienda'))
+          .then((usuario) => Navigator.of(context).pushReplacementNamed('/presentacion/presentacion'))
           .catchError((error) => _mostrarMensajeError(error.code, context));
     }
   }
@@ -187,7 +187,7 @@ class _LoginState extends State<Login> {
     servicioAutenticacion.ingresarConGoogle()
       .then((result) {
         print('Usuario : ${result.displayName}');
-        Navigator.of(context).pushReplacementNamed('/administracion/administracion-tienda');
+        Navigator.of(context).pushReplacementNamed('/presentacion/presentacion');
       })
       .catchError((error){
         print(error);
@@ -198,7 +198,7 @@ class _LoginState extends State<Login> {
     servicioAutenticacion.ingresarConFacebook()
       .then((result) {
         print('Usuario : ${result.displayName}');
-        Navigator.of(context).pushReplacementNamed('/administracion/administracion-tienda');
+        Navigator.of(context).pushReplacementNamed('/presentacion/presentacion');
       })
       .catchError((error){
         print(error);
