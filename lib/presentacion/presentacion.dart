@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:ruthapp/presentacion/paginas/pagina1.dart';
-import 'package:ruthapp/presentacion/paginas/pagina2.dart';
-import 'package:ruthapp/presentacion/paginas/pagina3.dart';
 import 'package:ruthapp/presentacion/indicador.dart';
+import 'package:ruthapp/presentacion/pantalla-presentacion.dart';
 
 class Presentacion extends StatefulWidget {
   @override
@@ -12,9 +10,9 @@ class Presentacion extends StatefulWidget {
 class _PresentacionState extends State<Presentacion> {
   final _controller = new PageController();
   final List<Widget> _pages = [
-    Page1(),
-    Page2(),
-    Page3(),
+    PantallaPresentacion('Hola !','Bienvenido a RuthApp','assets/imgs/LogoFlutter.png'),
+    PantallaPresentacion('Compra los mejores productos','Al mejor tendero...','assets/imgs/LogoFlutter.png'),
+    PantallaPresentacion('Vende los mejores productos...','Se tu el mejor tendero!!!','assets/imgs/LogoFlutter.png'),
   ];
   int page = 0;
   Container _empezar() {

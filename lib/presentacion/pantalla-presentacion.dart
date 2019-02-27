@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
-//import 'package:ruthapp/presentacion/efectos.dart';
 
-class Page2 extends StatelessWidget {
+class PantallaPresentacion extends StatelessWidget {
+
+  final String _textoPrincipal;
+  final String _textoSecundario;
+  final String _urlImagen;
+
+  PantallaPresentacion(@required this._textoPrincipal, @required this._textoSecundario, @required this._urlImagen);
+  
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -20,14 +26,14 @@ class Page2 extends StatelessWidget {
               children: <Widget>[
                 SizedBox(
                   child: Image(
-                    image: AssetImage('assets/imgs/LogoFlutter.png'),
+                    image: AssetImage(this._urlImagen),
                     fit: BoxFit.fitHeight,
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    'Compra los mejores productos',
+                    this._textoPrincipal,
                     style: Theme.of(context)
                         .textTheme
                         .display2
@@ -36,7 +42,7 @@ class Page2 extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  'Al mejor tendero...',
+                  this._textoSecundario,
                   style: Theme.of(context)
                       .textTheme
                       .display1
