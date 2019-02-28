@@ -4,8 +4,19 @@ class PantallaPresentacion extends StatelessWidget {
   final String _textoPrincipal;
   final String _textoSecundario;
   final String _urlImagen;
+  final Color _colorPrincipal;
+  final Color _colorSecundario;
+  final double _dimensionImgAncho;
+  final double _dimensionImgAlto;
 
-  PantallaPresentacion(@required this._textoPrincipal, @required this._textoSecundario, @required this._urlImagen);
+  PantallaPresentacion(
+      @required this._textoPrincipal,
+      @required this._textoSecundario,
+      @required this._urlImagen,
+      @required this._colorPrincipal,
+      @required this._colorSecundario,
+      @required this._dimensionImgAlto,
+      @required this._dimensionImgAncho);
 
   @override
   Widget build(BuildContext context) {
@@ -14,9 +25,9 @@ class PantallaPresentacion extends StatelessWidget {
       width: double.infinity,
       decoration: BoxDecoration(
           gradient: LinearGradient(colors: [
-        Colors.grey[300],
-        Colors.deepPurple[900],
-      ], begin: Alignment(0.5, -1.0), end: Alignment(0.5, 1.0))),
+        _colorPrincipal,
+        _colorSecundario,
+      ], begin: Alignment.bottomLeft, end: Alignment.bottomRight)),
       child: Stack(
         children: <Widget>[
           Positioned.fill(
@@ -40,6 +51,8 @@ class PantallaPresentacion extends StatelessWidget {
       child: Image(
         image: AssetImage(this._urlImagen),
         fit: BoxFit.fitHeight,
+        height: _dimensionImgAlto,
+        width: _dimensionImgAncho,
       ),
     );
   }
