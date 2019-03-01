@@ -80,22 +80,6 @@ class _PresentacionState extends State<Presentacion> {
     );
   }
 
-  Positioned _construirBase(bool pantallaFinal) {
-    return Positioned(
-      bottom: 10.0,
-      left: 0.0,
-      right: 0.0,
-      child: SafeArea(
-        child: Column(
-          children: <Widget>[
-            _construirPuntos(),
-            _muestraBotonEmpezar(pantallaFinal),
-          ],
-        ),
-      ),
-    );
-  }
-
   FlatButton _guiaPantalla(bool pantallaFinal) {
     return FlatButton(
       child: Text(
@@ -113,6 +97,24 @@ class _PresentacionState extends State<Presentacion> {
             },
     );
   }
+
+  Positioned _construirBase(bool pantallaFinal) {
+    return Positioned(
+      bottom: 10.0,
+      left: 0.0,
+      right: 0.0,
+      child: SafeArea(
+        child: Column(
+          children: <Widget>[
+            _construirPuntos(),
+            _muestraBotonEmpezar(pantallaFinal),
+          ],
+        ),
+      ),
+    );
+  }
+
+  
 
   Padding _construirPuntos() {
     return Padding(
