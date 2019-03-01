@@ -10,6 +10,7 @@ import 'package:ruthapp/cliente/comprar-producto.dart';
 import 'package:ruthapp/cliente/suscribirse-tienda.dart';
 import 'package:ruthapp/general/administracion-usuario.dart';
 import 'package:ruthapp/general/home-inicio.dart';
+import 'package:ruthapp/presentacion/presentacion.dart';
 
 void main() => runApp(MyApp());
 
@@ -31,7 +32,8 @@ class MyApp extends StatelessWidget {
           '/cliente/comprar-producto' : (BuildContext context) => ComprarProducto(),
           '/cliente/suscribirse-tienda' : (BuildContext context) => SuscribirseTienda(),
           '/general/administracion-usuario' : (BuildContext context) => AdministracionUsuario(),
-          '/general/home-inicio' : (BuildContext context) => HomeInicio()          
+          '/general/home-inicio' : (BuildContext context) => HomeInicio(),
+          '/presentacion/presentacion' : (BuildContext context) =>  Presentacion()
         }        
       );
   }
